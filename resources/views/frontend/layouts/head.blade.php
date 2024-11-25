@@ -21,7 +21,7 @@
         <meta property="og:image:type" content="image/png">
         <meta property="og:image:width" content="1200" >
         <meta property="og:image:height" content="600" > 
-		<title>Kanakku - Bootstrap Admin HTML Template</title>
+		<title>Quick Phone Fix</title>
 		
 		<!-- Favicon -->
 		<link rel="shortcut icon" href="{{asset('assets')}}/img/favicon.png">

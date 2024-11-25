@@ -27,13 +27,20 @@
 							@can('Administration')
 								<li class="menu-title"><span>Authorization</span></li>
 								<li>
-									<a href="{{ route('permission.index') }}"><i class="fe fe-permission"></i> <span> Permissions</span></a>
+									<a href="{{ route('permission.index') }}"><i class="fe fe-home"></i> <span> Permissions</span></a>
 								</li>
 								<li>
 									<a href="{{ route('role.index') }}"><i class="fe fe-home"></i> <span> Roles</span></a>
 								</li>
 								<li>
 									<a href="{{ route('users.index') }}"><i class="fe fe-user"></i> <span> Users</span></a>
+								</li>
+							@endcan
+							@can('Service Management')
+								<li class="menu-title"><span>Services</span></li>
+								<li>
+									<a href="{{ route('service.index') }}"><i class="fe fe-user"></i> <span> Service</span></a>
+									<a href="{{ route('service.create') }}"><i class="fe fe-home"></i> <span> Add Service</span></a>
 								</li>
 							@endcan
 							

@@ -13,6 +13,21 @@
             @include('frontend.layouts.sidebar')
 			<!-- Page Wrapper -->
 			<div class="page-wrapper">
+				<div class="content container-fluid d-none" style="margin:0; padding-bottom:0; ">
+					<!-- Page Header -->
+					
+					<!-- /Page Header -->					
+						
+					<!-- Alerts -->
+							
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+								<strong>Holy guacamole!</strong> You should check in on some of those fields below.
+								<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+							</div>
+							
+						
+					<!-- /Alerts -->				
+				</div>
 				@yield('content')
 			</div>
 			<!-- /Page Wrapper -->

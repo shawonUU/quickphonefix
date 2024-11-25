@@ -25,10 +25,10 @@
         <meta property="og:image:type" content="image/png">
         <meta property="og:image:width" content="1200" >
         <meta property="og:image:height" content="600" >
-		<title>Kanakku - Bootstrap Admin HTML Template</title>
+		<title>Quick Phone Fix</title>
 		
 		<!-- Favicon -->
-		<link rel="shortcut icon" href="{{asset('assets')}}/img/favicon.png">
+		<!-- <link rel="shortcut icon" href="{{asset('assets')}}/img/favicon.png"> -->
 		
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="{{asset('assets')}}/css/bootstrap.min.css">
@@ -53,8 +53,8 @@
 			<div class="login-wrapper">
 				<div class="container">
 				
-					<img class="img-fluid logo-dark mb-2 logo-color" src="{{asset('assets')}}/img/logo2.png" alt="Logo">
-					<img class="img-fluid logo-light mb-2" src="{{asset('assets')}}/img/logo2-white.png" alt="Logo">
+					<!-- <img class="img-fluid logo-dark mb-2 logo-color" src="{{asset('assets')}}/img/logo2.png" alt="Logo"> -->
+					<!-- <img class="img-fluid logo-light mb-2" src="{{asset('assets')}}/img/logo2-white.png" alt="Logo"> -->
 					<div class="loginbox">
 						
 						<div class="login-right">

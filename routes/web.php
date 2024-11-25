@@ -203,6 +203,11 @@ Route::group(['middleware' => ['permission:Administration']], function () {
     Route::resource('role', RoleController::class);
     Route::resource('permission', PermissionController::class);
 });
+
+Route::group(['middleware' => ['permission:Customer']], function () {
+    Route::resource('service', CustomerController::class);
+});
+
 Route::get('/success', [PaytrailController::class, 'success']);
 Route::get('/cancel', [PaytrailController::class, 'cancel']);
 Route::get('/pending', [PaytrailController::class, 'pending']);
@@ -216,11 +221,7 @@ Route::get('get-delivery-charge', [DelivaryChargeController::class, 'getDelivery
 Route::post('palce-order', [OrderController::class, 'placeOrder'])->name('please_order');
 Route::get('/order/received/{order_number}', [OrderController::class, 'orderReceived'])->name('order_received');
 Route::post('get-related-product', [ProductContoller::class, 'getRelatedProduct']);
-Route::prefix('frontend')->middleware(['auth'])->group(function () {
-    Route::post('update-customer-data',   [CustomerController::class, 'updateCustomerData']);
-    Route::post('verify-and-update-mail',   [CustomerController::class, 'verifyAndUpdateMail']);
-    Route::post('update-customer-password',   [CustomerController::class, 'updatePassword']);
-});
+
 
 
 Auth::routes([
@@ -241,29 +242,11 @@ Route::get('get-coupon', [CouponController::class, 'getCoupon']);
 Route::get('check-coupon', [CouponController::class, 'checkCoupon']);
 Route::get('get-currency', [CurrencyController::class, 'getCurrency'])->name('get.currency');
 
-Route::get('customer-signIn', [CustomerController::class, 'loginPage'])->name('customerLoginPage');
-Route::post('customer-logout', [CustomerController::class, 'customerLogout'])->name('customerLogout');
 
-Route::get('/my-account', [CustomerController::class, 'signUpPage'])->name('my_account');
-Route::post('customer-signUp', [CustomerController::class, 'customerSignUp'])->name('customersignUp');
-Route::post('customer-signIn', [CustomerController::class, 'customerLogin'])->name('customerLogin');
-Route::get('/customer-deshboard', [CustomerController::class, 'customerDeshboard'])->name('customer_profile');
-Route::post('/update-customer-profile', [CustomerController::class, 'updateCustomerData'])->name('update_customer_profile');
-
-
-
-Route::post('send-verification-mail', [CustomerController::class, 'sendVerificationMail']);
-Route::post('verify-account', [CustomerController::class, 'verifyAccount']);
-Route::post('verify-account-forgot-password', [CustomerController::class, 'verifyAccountForgotPassword']);
-Route::post('change-password', [CustomerController::class, 'changePassword']);
-Route::get('customer-deshboard/orders', [CustomerController::class, 'getCustomerOrders'])->name('customers_orders');
-Route::get('customer-deshboard/profile', [CustomerController::class, 'getCustomerProfile'])->name('customers_profile');
-Route::get('customer-deshboard/view-order/{order_number}', [CustomerController::class, 'customerOrderView'])->name('customers_order_view');
 Route::get('get-order-status', [OrderController::class, 'getOrderStatus']);
 Route::get('order-info', [OrderController::class, 'getCustomerOrderInfo']);
 Route::post('update-notification', [NotificationController::class, 'update'])->name('update-notification');
 Route::post('/paytrail/create-payment', [PaytrailController::class, 'createPayment']);
-Route::post('/contact-us-submit', [CustomerController::class, 'submitContact']);
 
 Route::post('/add-to-cart', [OrderController::class, 'addToCart'])->name('add_to_cart');
 Route::post('/update-cart-qty', [OrderController::class, 'updateCartQty'])->name('update_cart_qty');
