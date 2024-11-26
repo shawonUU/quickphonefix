@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitce08922112a16e1381ee776920d75578
+class ComposerStaticInit5ed0ce9c5895d305d707aa8077a3b9f5
 {
     public static $files = array (
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
@@ -375,8 +375,8 @@ class ComposerStaticInitce08922112a16e1381ee776920d75578
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-factory/src',
-            1 => __DIR__ . '/..' . '/psr/http-message/src',
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            1 => __DIR__ . '/..' . '/psr/http-factory/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -591,6 +591,7 @@ class ComposerStaticInitce08922112a16e1381ee776920d75578
         'App\\Http\\Controllers\\Admin\\CurrencyController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/CurrencyController.php',
         'App\\Http\\Controllers\\Admin\\DashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/DashboardController.php',
         'App\\Http\\Controllers\\Admin\\DelivaryChargeController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/DelivaryChargeController.php',
+        'App\\Http\\Controllers\\Admin\\DelivaryPercentageController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/DelivaryPercentageController.php',
         'App\\Http\\Controllers\\Admin\\HomePageController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/HomePageController.php',
         'App\\Http\\Controllers\\Admin\\Location' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Location.php',
         'App\\Http\\Controllers\\Admin\\MenuController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/MenuController.php',
@@ -647,6 +648,7 @@ class ComposerStaticInitce08922112a16e1381ee776920d75578
         'App\\Models\\Admin\\Coupon' => __DIR__ . '/../..' . '/app/Models/Admin/Coupon.php',
         'App\\Models\\Admin\\Currency' => __DIR__ . '/../..' . '/app/Models/Admin/Currency.php',
         'App\\Models\\Admin\\DelivaryCharge' => __DIR__ . '/../..' . '/app/Models/Admin/DelivaryCharge.php',
+        'App\\Models\\Admin\\DeliveryPercentage' => __DIR__ . '/../..' . '/app/Models/Admin/DeliveryPercentage.php',
         'App\\Models\\Admin\\District' => __DIR__ . '/../..' . '/app/Models/Admin/District.php',
         'App\\Models\\Admin\\HomeAd' => __DIR__ . '/../..' . '/app/Models/Admin/HomeAd.php',
         'App\\Models\\Admin\\HomePage' => __DIR__ . '/../..' . '/app/Models/Admin/HomePage.php',
@@ -663,8 +665,6 @@ class ComposerStaticInitce08922112a16e1381ee776920d75578
         'App\\Models\\Admin\\ProductTag' => __DIR__ . '/../..' . '/app/Models/Admin/ProductTag.php',
         'App\\Models\\Admin\\ProductToping' => __DIR__ . '/../..' . '/app/Models/Admin/ProductToping.php',
         'App\\Models\\Admin\\Publisher' => __DIR__ . '/../..' . '/app/Models/Admin/Publisher.php',
-        'App\\Models\\Admin\\Rating' => __DIR__ . '/../..' . '/app/Models/Admin/Rating.php',
-        'App\\Models\\Admin\\Review' => __DIR__ . '/../..' . '/app/Models/Admin/Review.php',
         'App\\Models\\Admin\\Schedule' => __DIR__ . '/../..' . '/app/Models/Admin/Schedule.php',
         'App\\Models\\Admin\\Size' => __DIR__ . '/../..' . '/app/Models/Admin/Size.php',
         'App\\Models\\Admin\\Slider' => __DIR__ . '/../..' . '/app/Models/Admin/Slider.php',
@@ -672,11 +672,13 @@ class ComposerStaticInitce08922112a16e1381ee776920d75578
         'App\\Models\\Admin\\Subject' => __DIR__ . '/../..' . '/app/Models/Admin/Subject.php',
         'App\\Models\\Admin\\Toping' => __DIR__ . '/../..' . '/app/Models/Admin/Toping.php',
         'App\\Models\\Admin\\Writer' => __DIR__ . '/../..' . '/app/Models/Admin/Writer.php',
+        'App\\Models\\Customer' => __DIR__ . '/../..' . '/app/Models/Customer.php',
         'App\\Models\\Notification' => __DIR__ . '/../..' . '/app/Models/Notification.php',
         'App\\Models\\Order' => __DIR__ . '/../..' . '/app/Models/Order.php',
         'App\\Models\\OrderItem' => __DIR__ . '/../..' . '/app/Models/OrderItem.php',
         'App\\Models\\PaymentHistory' => __DIR__ . '/../..' . '/app/Models/PaymentHistory.php',
         'App\\Models\\RatingReview' => __DIR__ . '/../..' . '/app/Models/RatingReview.php',
+        'App\\Models\\Service' => __DIR__ . '/../..' . '/app/Models/Service.php',
         'App\\Models\\SizeVsTopingPrice' => __DIR__ . '/../..' . '/app/Models/SizeVsTopingPrice.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
@@ -6579,7 +6581,6 @@ class ComposerStaticInitce08922112a16e1381ee776920d75578
         'Symfony\\Component\\String\\Inflector\\FrenchInflector' => __DIR__ . '/..' . '/symfony/string/Inflector/FrenchInflector.php',
         'Symfony\\Component\\String\\Inflector\\InflectorInterface' => __DIR__ . '/..' . '/symfony/string/Inflector/InflectorInterface.php',
         'Symfony\\Component\\String\\LazyString' => __DIR__ . '/..' . '/symfony/string/LazyString.php',
-        'Symfony\\Component\\String\\Resources\\WcswidthDataGenerator' => __DIR__ . '/..' . '/symfony/string/Resources/WcswidthDataGenerator.php',
         'Symfony\\Component\\String\\Slugger\\AsciiSlugger' => __DIR__ . '/..' . '/symfony/string/Slugger/AsciiSlugger.php',
         'Symfony\\Component\\String\\Slugger\\SluggerInterface' => __DIR__ . '/..' . '/symfony/string/Slugger/SluggerInterface.php',
         'Symfony\\Component\\String\\UnicodeString' => __DIR__ . '/..' . '/symfony/string/UnicodeString.php',
@@ -6915,9 +6916,9 @@ class ComposerStaticInitce08922112a16e1381ee776920d75578
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitce08922112a16e1381ee776920d75578::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitce08922112a16e1381ee776920d75578::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitce08922112a16e1381ee776920d75578::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit5ed0ce9c5895d305d707aa8077a3b9f5::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit5ed0ce9c5895d305d707aa8077a3b9f5::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit5ed0ce9c5895d305d707aa8077a3b9f5::$classMap;
 
         }, null, ClassLoader::class);
     }

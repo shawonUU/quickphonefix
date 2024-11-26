@@ -15,7 +15,8 @@
         "laravel/ui": "^4.4",
         "paytrail/paytrail-php-sdk": "^2.7",
         "pusher/pusher-php-server": "^7.2",
-        "spatie/laravel-permission": "^6.3"
+        "spatie/laravel-permission": "^6.3",
+        "symfony/var-dumper": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
