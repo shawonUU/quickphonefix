@@ -16,8 +16,8 @@ class CustomerController extends Controller
     public function index()
     {
         $customers = Service::get();
-
-        return view('frontend.pages.customer.index',compact('customers'));
+        $users = User::pluck('name','id');
+        return view('frontend.pages.customer.index',compact('customers','users'));
     }
 
     /**
@@ -35,7 +35,7 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
     
-        //return $attributes = $request->all();
+        $attributes = $request->all();
         $rules = [
             'name' => 'required',
             'email' => 'nullable|email',
@@ -61,6 +61,7 @@ class CustomerController extends Controller
         $customer->product_name = $request->product_name;
         $customer->product_number = $request->product_number;
         $customer->bill = $request->bill;
+        $customer->details = $request->details;
         $customer->warranty_duration = $request->warranty_duration;
         $customer->repaired_by = $request->repaired_by;
         $customer->save();

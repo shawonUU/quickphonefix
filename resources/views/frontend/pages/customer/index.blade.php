@@ -49,7 +49,7 @@
             </a>
           </li>
           <li>
-            <a class="btn btn-primary" href="{{route('customer.create')}}">
+            <a class="btn btn-primary" href="{{route('service.create')}}">
               <i class="fa fa-plus-circle me-2" aria-hidden="true"></i>Add Service </a>
           </li>
         </ul>
@@ -96,6 +96,11 @@
                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending">Name</th>
                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending">Email</th>
                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending">Phone</th>
+                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending">Product Name</th>
+                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending">Product Number</th>
+                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending">Bill</th>
+                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending">Warranty</th>
+                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending">Repaired By</th>
                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending">Status</th>
                     <th class="no-sort sorting_disabled" rowspan="1" colspan="1" aria-label="Actions">Actions</th>
                   </tr>
@@ -119,6 +124,11 @@
                     <td>
                       <h2 class="table-avatar"> <span>{{$customer->phone}}</span></h2>
                     </td>
+                    <td> {{$customer->product_name}} </td>
+                    <td> {{$customer->product_number}} </td>
+                    <td> {{$customer->bill}} </td>
+                    <td> {{$customer->warranty_duration}} </td>
+                    <td> {{getArrayData($users,$customer->repaired_by)}} </td>
                     
                     <td>
                         @if($customer->status=='1')

@@ -24,6 +24,14 @@
 						<ul class="sidebar-vertical ">
 							<!-- Main -->
 
+							
+							@can('Service Management')
+								<li class="menu-title"><span>Services</span></li>
+								<li>
+									<a href="{{ route('service.index') }}"><i class="fe fe-user"></i> <span> Service</span></a>
+									<a href="{{ route('service.create') }}"><i class="fe fe-home"></i> <span> Add Service</span></a>
+								</li>
+							@endcan
 							@can('Administration')
 								<li class="menu-title"><span>Authorization</span></li>
 								<li>
@@ -34,13 +42,6 @@
 								</li>
 								<li>
 									<a href="{{ route('users.index') }}"><i class="fe fe-user"></i> <span> Users</span></a>
-								</li>
-							@endcan
-							@can('Service Management')
-								<li class="menu-title"><span>Services</span></li>
-								<li>
-									<a href="{{ route('service.index') }}"><i class="fe fe-user"></i> <span> Service</span></a>
-									<a href="{{ route('service.create') }}"><i class="fe fe-home"></i> <span> Add Service</span></a>
 								</li>
 							@endcan
 							

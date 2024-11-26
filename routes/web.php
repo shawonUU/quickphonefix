@@ -204,9 +204,9 @@ Route::group(['middleware' => ['permission:Administration']], function () {
     Route::resource('permission', PermissionController::class);
 });
 
-Route::group(['middleware' => ['permission:Customer']], function () {
+// Route::group(['middleware' => ['permission:Customer']], function () {
     Route::resource('service', CustomerController::class);
-});
+// });
 
 Route::get('/success', [PaytrailController::class, 'success']);
 Route::get('/cancel', [PaytrailController::class, 'cancel']);

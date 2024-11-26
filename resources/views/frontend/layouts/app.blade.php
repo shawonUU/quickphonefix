@@ -13,18 +13,32 @@
             @include('frontend.layouts.sidebar')
 			<!-- Page Wrapper -->
 			<div class="page-wrapper">
-				<div class="content container-fluid d-none" style="margin:0; padding-bottom:0; ">
+				<div class="content container-fluid " style="margin:0; padding-bottom:0; ">
 					<!-- Page Header -->
 					
 					<!-- /Page Header -->					
 						
 					<!-- Alerts -->
-							
+					@if ($message = Session::get('success'))
 							<div class="alert alert-success alert-dismissible fade show" role="alert">
 								<strong>Holy guacamole!</strong> You should check in on some of those fields below.
 								<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 							</div>
-							
+					@elseif ($errors->any())
+					<div class="alert alert-danger alert-block" style="margin: 10px;">
+						<button type="button" class="close" data-dismiss="alert">×</button>
+						Check the following errors :
+						@foreach ($errors->all() as $error)
+						<br><strong>{{ $error }}</strong>
+						@endforeach
+					</div>
+					@elseif ($message = Session::get('error'))
+					<div class="alert alert-danger alert-block" style="margin: 10px;">
+						<button type="button" class="close" data-dismiss="alert">×</button>
+						<strong>{{ $message }}</strong>
+					</div>
+					@endif
+												
 						
 					<!-- /Alerts -->				
 				</div>
