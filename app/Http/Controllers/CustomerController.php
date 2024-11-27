@@ -15,9 +15,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Service::get();
-        $users = User::pluck('name','id');
-        return view('frontend.pages.customer.index',compact('customers','users'));
+        //
     }
 
     /**
@@ -25,8 +23,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        $users  = User::get();
-        return view('frontend.pages.customer.create',compact('users'));
+       //
     }
 
     /**
@@ -35,38 +32,7 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
     
-        $attributes = $request->all();
-        $rules = [
-            'name' => 'required',
-            'email' => 'nullable|email',
-            'phone' => 'numeric',
-            'address' => 'required',
-            'product_name' => 'required',
-            'product_number' => 'required',
-            'details' => 'required',
-            'bill' => 'required|numeric',
-            'warranty_duration' => 'required|numeric',
-            'repaired_by' => 'required|numeric',
-        ];
-        $validation = Validator::make($attributes, $rules);
-        if ($validation->fails()) {
-            return redirect()->back()->with(['error' => getNotify(4)])->withErrors($validation)->withInput();
-        }
-
-        $customer = new Service;
-        $customer->name = $request->name;
-        $customer->email = $request->email;
-        $customer->phone = $request->phone;
-        $customer->address = $request->address;
-        $customer->product_name = $request->product_name;
-        $customer->product_number = $request->product_number;
-        $customer->bill = $request->bill;
-        $customer->details = $request->details;
-        $customer->warranty_duration = $request->warranty_duration;
-        $customer->repaired_by = $request->repaired_by;
-        $customer->save();
-
-        return redirect()->back()->with(['success' => getNotify(1)]);
+        //
 
     }
 

@@ -38,71 +38,71 @@
 												<div class="col-lg-4 col-md-6 col-sm-12">
 													<div class="input-block mb-3">
 														<label>Name <span class="text-danger">*</span></label> 
-														<input type="text" name="name" class="form-control" placeholder="Enter Name">
+														<input type="text" name="name" class="form-control" placeholder="Enter Name" value="{{ old('name') }}" required>
+													</div>
+												</div>
+												<div class="col-lg-4 col-md-6 col-sm-12">
+													<div class="input-block mb-3">
+														<label>Phone<span class="text-danger">*</span> </label>
+														<input type="text"  class="form-control" placeholder="Phone Number" name="phone" value="{{ old('phone') }}" required>
 													</div>
 												</div>
 												<div class="col-lg-4 col-md-6 col-sm-12">
 													<div class="input-block mb-3 " >
 														<label>Email </label>
-														<input type="email" name="email" class="form-control" placeholder="Enter Email Address">
+														<input type="email" name="email" class="form-control" placeholder="Enter Email Address" value="{{ old('email') }}">
 													</div>											
 												</div>
-												<div class="col-lg-4 col-md-6 col-sm-12">
+
+                                                <div class="col-lg-4 col-md-6 col-sm-12">
 													<div class="input-block mb-3">
-														<label>Phone </label>
-														<input type="text"  class="form-control" placeholder="Phone Number" name="phone">
+														<label>Address <span class="text-danger">*</span></label>
+														<textarea type="text"  class="form-control" placeholder="Address" name="address" required>{{ old('address') }}</textarea>
 													</div>
 												</div>
 
                                                 <div class="col-lg-4 col-md-6 col-sm-12">
 													<div class="input-block mb-3">
-														<label>Address </label>
-														<textarea type="text"  class="form-control" placeholder="Address" name="address"></textarea>
+														<label>Product Name <span class="text-danger">*</span></label>
+														<input type="text"  class="form-control" placeholder="Product Name" name="product_name" value="{{ old('product_name') }}" required>
 													</div>
 												</div>
 
                                                 <div class="col-lg-4 col-md-6 col-sm-12">
 													<div class="input-block mb-3">
-														<label>Product Name </label>
-														<input type="text"  class="form-control" placeholder="Product Name" name="product_name">
-													</div>
-												</div>
-
-                                                <div class="col-lg-4 col-md-6 col-sm-12">
-													<div class="input-block mb-3">
-														<label>Product EMEI or Serial number </label>
-														<input type="text"  class="form-control" placeholder="Product EMEI or Serial number" name="product_number">
+														<label>Product EMEI or Serial number <span class="text-danger">*</span></label>
+														<input type="text"  class="form-control" placeholder="Product EMEI or Serial number" name="product_number" value="{{ old('product_number') }}" required>
 													</div>
 												</div>
 
                                                 <div class="col-lg-4 col-md-6 col-sm-12">
 													<div class="input-block mb-3">
 														<label>Service Details </label>
-														<textarea type="text"  class="form-control" placeholder="Service Details" name="details"></textarea>
+														<textarea type="text"  class="form-control" placeholder="Service Details" name="details" >{{ old('details') }}</textarea>
 													</div>
 												</div>
 
                                                 <div class="col-lg-4 col-md-6 col-sm-12">
 													<div class="input-block mb-3">
-														<label>Bill </label>
-                                                        <input type="text"  class="form-control" placeholder="Bill" name="bill">
+														<label>Bill <span class="text-danger">*</span></label>
+                                                        <input type="text"  class="form-control" placeholder="Bill" name="bill" value="{{ old('bill') }}" required>
 													</div>
 												</div>
 
                                                 <div class="col-lg-4 col-md-6 col-sm-12">
 													<div class="input-block mb-3">
-														<label>Warranty Duration (In days)</label>
-                                                        <input type="number"  class="form-control" placeholder="Warranty Duration" name="warranty_duration">
+														<label>Warranty Duration (In days) <span class="text-danger">*</span></label>
+                                                        <input type="number"  class="form-control" placeholder="Warranty Duration" name="warranty_duration" value="{{ old('warranty_duration') }}">
 													</div>
 												</div>
 
                                                 <div class="col-lg-4 col-md-6 col-sm-12">
 													<div class="input-block mb-3">
-														<label>Repaired By</label>
+														<label>Repaired By <span class="text-danger">*</span></label>
                                                         <Select class="form-select" name="repaired_by" required>
                                                             <option value="">--Select--</option>
                                                             @foreach ($users as $user)
-                                                                <option value="{{$user->id}}">{{$user->name}}</option>
+															<option value="{{$user->id}}" {{ old('repaired_by') == $user->id ? 'selected' : '' }}>{{$user->name}}</option>
                                                             @endforeach
                                                         </Select>
 													</div>

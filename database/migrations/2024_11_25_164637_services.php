@@ -13,13 +13,10 @@ return new class extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->nullable();
-            $table->string('phone');
-            $table->text('address');
+            $table->bigInteger('customer_id');
             $table->string('product_name');
             $table->string('product_number');
-            $table->string('details');
+            $table->string('details')->nullable;
             $table->double('bill');
             $table->integer('warranty_duration');
             $table->bigInteger('repaired_by');

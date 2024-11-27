@@ -73,7 +73,7 @@
 												<img src="{{asset('assets')}}/img/vertical.png" alt="img">
 											</label> 
 										</div> 
-										<h5 class="fs-13 text-center mt-2 mb-2">Blue</h5> 
+										<h5 class="fs-13 text-center mt-2 mb-2">Red</h5> 
 									</div>
 								<div class="col-4"> 
 									<div class="form-check card-radio p-0"> 
@@ -316,9 +316,6 @@
 				<div class="row"> 
 					<div class="col-6"> 
 						<button type="button" class="btn btn-light w-100 bor-rad-50" id="reset-layout">Reset</button> 
-					</div> 
-					<div class="col-6"> 
-						<a href="https://themeforest.net/item/smarthr-bootstrap-admin-panel-template/21153150" target="_blank" class="btn btn-primary w-100 bor-rad-50">Buy Now</a> 
 					</div> 
 				</div> 
 			</div> 

@@ -237,6 +237,10 @@ function lib_subject(){
   return return_library(Subject::where('status', '1')->get(), 'id', 'name');
 }
 
+function lib_serviceMan(){
+  return return_library(User::where('status', '1')->get(), 'id', 'name');
+}
+
 function get_names($data, $ids){
   if(getType($ids) != "array"){$ids = explode(',', $ids);}
 

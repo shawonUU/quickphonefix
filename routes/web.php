@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Location;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\PaytrailController;
 use App\Http\Controllers\Admin\AdsController;
@@ -205,7 +206,9 @@ Route::group(['middleware' => ['permission:Administration']], function () {
 });
 
 // Route::group(['middleware' => ['permission:Customer']], function () {
-    Route::resource('service', CustomerController::class);
+    Route::resource('service', ServiceController::class);
+    Route::get('service/invoice/{id}', [ServiceController::class, 'makeInvoice'])->name('service.invoice');
+    
 // });
 
 Route::get('/success', [PaytrailController::class, 'success']);

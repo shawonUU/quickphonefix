@@ -106,7 +106,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                @foreach ($customers as $customer)
+                @foreach ([] as $service)
                   <tr role="row" class="odd">
                     <td class="sorting_1">1</td>
                     <td>
@@ -114,24 +114,24 @@
                         <a href="profile.html" class="avatar avatar-md me-2 d-none">
                           <img class="avatar-img rounded-circle" src="assets/img/profiles/avatar-14.jpg" alt="User Image">
                         </a>
-                        <a href="javascript:void(0)">{{$customer->name}}
+                        <a href="javascript:void(0)">{{$service->name}}
                         </a>
                       </h2>
                     </td>
                     <td>
-                      <h2 class="table-avatar"> <span>{{$customer->email}}</span></h2>
+                      <h2 class="table-avatar"> <span>{{$service->email}}</span></h2>
                     </td>
                     <td>
-                      <h2 class="table-avatar"> <span>{{$customer->phone}}</span></h2>
+                      <h2 class="table-avatar"> <span>{{$service->phone}}</span></h2>
                     </td>
-                    <td> {{$customer->product_name}} </td>
-                    <td> {{$customer->product_number}} </td>
-                    <td> {{$customer->bill}} </td>
-                    <td> {{$customer->warranty_duration}} </td>
-                    <td> {{getArrayData($users,$customer->repaired_by)}} </td>
+                    <td> {{$service->product_name}} </td>
+                    <td> {{$service->product_number}} </td>
+                    <td> {{$service->bill}} </td>
+                    <td> {{$service->warranty_duration}} </td>
+                    <td> {{getArrayData($users,$service->repaired_by)}} </td>
                     
                     <td>
-                        @if($customer->status=='1')
+                        @if($service->status=='1')
                         <span class="badge bg-success-light">Active</span>
                         @else
                         <span class="badge  bg-danger-light">Deactive</span>
@@ -145,6 +145,10 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
                           <ul>
+                            <li>
+                              <a class="dropdown-item" href="{{route('service.invoice', $service->id)}}">
+                                <i class="far fa-edit me-2"></i>Invoice </a>
+                            </li>
                             <li>
                               <a class="dropdown-item" href="edit-customer.html">
                                 <i class="far fa-edit me-2"></i>Edit </a>
