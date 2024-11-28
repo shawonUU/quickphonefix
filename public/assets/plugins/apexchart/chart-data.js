@@ -2,6 +2,12 @@
 
 $(document).ready(function() {
 
+  const monthlyRevenue = window.chartData.monthlyRevenue;
+  const yearlyRevenue = window.chartData.yearlyRevenue;
+
+  // console.log(monthlyRevenue);
+  // console.log(yearlyRevenue);
+
     function generateData(baseval, count, yrange) {
         var i = 0;
         var series = [];
@@ -20,6 +26,8 @@ $(document).ready(function() {
 
     // Column chart
     if($('#sales_chart').length > 0 ){
+      var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      var monthlyData = months.map(month => monthlyRevenue[month] || 0);
         var columnCtx = document.getElementById("sales_chart"),
         columnConfig = {
             colors: ['#7638ff', '#fda600'],
@@ -27,12 +35,12 @@ $(document).ready(function() {
                 {
                 name: "Received",
                 type: "column",
-                data: [70, 150, 80, 180, 150, 175, 201, 60, 200, 120, 190, 160, 50]
+                data: monthlyData
                 },
                 {
                 name: "Pending",
                 type: "column",
-                data: [23, 42, 35, 27, 43, 22, 17, 31, 22, 22, 12, 16, 80]
+                data: [0,0,0,0,0,0,0,0,0,0,0,0]
                 }
             ],
             chart: {
@@ -59,7 +67,71 @@ $(document).ready(function() {
                 colors: ['transparent']
             },
             xaxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+                categories: months,
+            },
+            yaxis: {
+                title: {
+                    text: '$ (thousands)'
+                }
+            },
+            fill: {
+                opacity: 1
+            },
+            tooltip: {
+                y: {
+                    formatter: function (val) {
+                        return "$ " + val + " thousands"
+                    }
+                }
+            }
+        };
+        var columnChart = new ApexCharts(columnCtx, columnConfig);
+        columnChart.render();
+    }
+
+    if($('#sales_chart_yearly').length > 0 ){
+      var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      var monthlyData = months.map(month => monthlyRevenue[month] || 0);
+        var columnCtx = document.getElementById("sales_chart_yearly"),
+        columnConfig = {
+            colors: ['#7638ff', '#fda600'],
+            series: [
+                {
+                name: "Received",
+                type: "column",
+                data: monthlyData
+                },
+                {
+                name: "Pending",
+                type: "column",
+                data: [0,0,0,0,0,0,0,0,0,0,0,0]
+                }
+            ],
+            chart: {
+                type: 'bar',
+                fontFamily: 'Poppins, sans-serif',
+                height: 350,
+                toolbar: {
+                    show: false
+                }
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '60%',
+                    endingShape: 'rounded'
+                },
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                show: true,
+                width: 2,
+                colors: ['transparent']
+            },
+            xaxis: {
+                categories: months,
             },
             yaxis: {
                 title: {

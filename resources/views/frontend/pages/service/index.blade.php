@@ -101,7 +101,6 @@
                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending">Bill</th>
                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending">Warranty</th>
                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending">Repaired By</th>
-                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending">Status</th>
                     <th class="no-sort sorting_disabled" rowspan="1" colspan="1" aria-label="Actions">Actions</th>
                   </tr>
                 </thead>
@@ -130,14 +129,7 @@
                     <td> {{$service->warranty_duration}} </td>
                     <td> {{getArrayData($users,$service->repaired_by)}} </td>
                     
-                    <td>
-                        @if($service->status=='1')
-                        <span class="badge bg-success-light">Active</span>
-                        @else
-                        <span class="badge  bg-danger-light">Deactive</span>
-                        @endif
-
-                    </td>
+                    
                     <td class="d-flex align-items-center">
                       <div class="dropdown dropdown-action">
                         <a href="#" class=" btn-action-icon " data-bs-toggle="dropdown" aria-expanded="false">
@@ -150,24 +142,12 @@
                                 <i class="far fa-edit me-2"></i>Invoice </a>
                             </li>
                             <li>
-                              <a class="dropdown-item" href="edit-customer.html">
+                              <a class="dropdown-item" href="{{route('service.edit', $service->id)}}">
                                 <i class="far fa-edit me-2"></i>Edit </a>
                             </li>
-                            <li>
-                              <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#delete_modal">
-                                <i class="far fa-trash-alt me-2"></i>Delete </a>
-                            </li>
                             <li class="d-none">
-                              <a class="dropdown-item" href="customer-details.html">
+                              <a class="dropdown-item" href="">
                                 <i class="far fa-eye me-2"></i>View </a>
-                            </li>
-                            <li>
-                              <a class="dropdown-item" href="active-customers.html">
-                                <i class="fa-solid fa-power-off me-2"></i>Activate </a>
-                            </li>
-                            <li>
-                              <a class="dropdown-item" href="deactive-customers.html">
-                                <i class="far fa-bell-slash me-2"></i>Deactivate </a>
                             </li>
                           </ul>
                         </div>

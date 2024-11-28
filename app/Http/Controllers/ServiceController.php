@@ -95,7 +95,7 @@ class ServiceController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
     }
 
     /**
@@ -103,7 +103,14 @@ class ServiceController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $service = Service::join('customers','customers.id','=','services.customer_id')
+                    ->where('services.id',$id)
+                    ->select('services.*','customers.name','customers.phone','customers.email','customers.address')
+                    ->first();
+        if(!$service)abort(404);
+        $serviceMans = lib_serviceMan();
+
+        return view('frontend.pages.service.edit',compact('service','serviceMans'));
     }
 
     /**
@@ -111,7 +118,59 @@ class ServiceController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $service = Service::where('id',$id)->first();
+        if(!$service)abort(404);
+
+        $attributes = $request->all();
+        $rules = [
+            'name' => 'required',
+            'email' => 'nullable|email',
+            'phone' => 'required|numeric',
+            'address' => 'required',
+            'product_name' => 'required',
+            'product_number' => 'required',
+            'details' => 'required',
+            'bill' => 'required|numeric',
+            'warranty_duration' => 'required|numeric',
+            'repaired_by' => 'required|numeric',
+        ];
+        $validation = Validator::make($attributes, $rules);
+        if ($validation->fails()) {
+            return redirect()->back()->with(['error' => getNotify(4)])->withErrors($validation)->withInput();
+        }
+
+        $customerByPhone = Customer::where('phone', $request->phone)->first();
+        $customerByEmail = Customer::where('email', $request->email)->first();
+        $customer =  new Customer;
+
+        if((!$customerByPhone && $customerByEmail)){
+            $customer = $customerByEmail;
+        }elseif(($customerByPhone && !$customerByEmail)){
+            $customer = $customerByPhone;
+        }elseif($customerByPhone && $customerByEmail && $customerByPhone->id == $customerByEmail->id){
+            $customer = $customerByPhone;
+        }elseif($customerByPhone && $customerByEmail && $customerByPhone->id != $customerByEmail->id){
+            return redirect()->back()->with(['error' => 'The email is added for another customer.'])->withInput();
+        }
+
+        $customer->name = $request->name;
+        if($request->email != "" )$customer->email = $request->email;
+        $customer->phone = $request->phone;
+        $customer->address = $request->address;
+        $customer->save();
+
+        $service->customer_id = $customer->id;
+        $service->product_name = $request->product_name;
+        $service->product_number = $request->product_number;
+        $service->bill = $request->bill;
+        $service->details = $request->details;
+        $service->warranty_duration = $request->warranty_duration;
+        $service->repaired_by = $request->repaired_by;
+        $service->update();
+
+        return redirect()->back()->with(['success' => getNotify(2)]);
+
+
     }
 
     /**

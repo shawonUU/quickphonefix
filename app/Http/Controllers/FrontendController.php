@@ -18,15 +18,34 @@ use App\Models\Admin\Publisher;
 use App\Models\Admin\ProductSize;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
+use App\Models\Service;
+use Carbon\Carbon;
 
 class FrontendController extends Controller
 {
     public function index()
-    {  
+    { 
+        
+        $todaysRevenue = Service::whereDate('created_at', Carbon::today())->sum('bill');
+        $thisWeeksRevenue = Service::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->sum('bill');
+        $thisMonthsRevenue = Service::whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->sum('bill');
+        $thisYearsRevenue = Service::whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])->sum('bill');
 
+        $monthlyRevenue = Service::selectRaw('MONTH(created_at) as month, SUM(bill) as total')
+        ->whereYear('created_at', Carbon::now()->year)
+        ->groupBy('month')
+        ->pluck('total', 'month')
+        ->mapWithKeys(function ($total, $month) {
+            $monthName = Carbon::createFromFormat('m', $month)->format('M');
+            return [$monthName => $total];
+        });
+
+        $yearlyRevenue = Service::selectRaw('YEAR(created_at) as year, SUM(bill) as total')
+            ->groupBy('year')
+            ->pluck('total', 'year');
         
         
-        return view('frontend.pages.index');
+        return view('frontend.pages.index', compact('todaysRevenue','thisWeeksRevenue','thisMonthsRevenue','thisYearsRevenue','monthlyRevenue','yearlyRevenue'));
         // return view('frontend.pages.index', compact('homeItems'));
     }
 
