@@ -7,41 +7,42 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Location;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\PaytrailController;
 use App\Http\Controllers\Admin\AdsController;
-use App\Http\Controllers\Admin\AddressController;
+use App\Http\Controllers\Admin\BookController;
+use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\ProductContoller;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\WriterController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ReviewRatingController;
+use App\Http\Controllers\Admin\AddressController;
+use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\Admin\TopingsController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\SubCategoryController;
-use App\Http\Controllers\Admin\BookCategoryController;
-use App\Http\Controllers\Admin\BookSubCategoryController;
 use App\Http\Controllers\Admin\CurrencyController;
+use App\Http\Controllers\Admin\HomePageController;
 use App\Http\Controllers\Admin\NutritionController;
+use App\Http\Controllers\Admin\PublisherController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\OptionTitleController;
+use App\Http\Controllers\Admin\SubCategoryController;
+use App\Http\Controllers\Admin\BookCategoryController;
 use App\Http\Controllers\Admin\TimeScheduleController;
 use App\Http\Controllers\Admin\DelivaryChargeController;
-use App\Http\Controllers\Admin\DelivaryPercentageController;
+use App\Http\Controllers\Admin\BookSubCategoryController;
 use App\Http\Controllers\Admin\ProductMnagementController;
-use App\Http\Controllers\Admin\PublisherController;
-use App\Http\Controllers\Admin\WriterController;
-use App\Http\Controllers\Admin\SubjectController;
-use App\Http\Controllers\Admin\BrandController;
-use App\Http\Controllers\Admin\BookController;
-use App\Http\Controllers\Admin\HomePageController;
-use App\Http\Controllers\Admin\MenuController;
-use App\Http\Controllers\ReviewRatingController;
+use App\Http\Controllers\Admin\DelivaryPercentageController;
 
 
 /*
@@ -208,6 +209,8 @@ Route::group(['middleware' => ['permission:Administration']], function () {
 // Route::group(['middleware' => ['permission:Customer']], function () {
     Route::resource('service', ServiceController::class);
     Route::get('service/invoice/{id}', [ServiceController::class, 'makeInvoice'])->name('service.invoice');
+
+    Route::resource('booking', BookingController::class);
     
 // });
 

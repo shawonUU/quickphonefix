@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Booking;
 use App\Models\Customer;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Http;
 class BookingController extends Controller
 {
     /**
@@ -13,9 +13,21 @@ class BookingController extends Controller
      */
     public function index()
     {
-        $bookings = Booking::join('customers','customers.id','=','bookings.customer_id')
-        ->select('bookings.*','customers.name','customers.phone','customers.email','customers.address')->get();
-        return response()->json($bookings, 200);
+        // $bookings = Booking::join('customers','customers.id','=','bookings.customer_id')
+        // ->select('bookings.*','customers.name','customers.phone','customers.email','customers.address')->get();
+        // return response()->json($bookings, 200);
+        $apiUrl = 'https://quickphonefixandmore.com/wp-json/jet-cct/booking_form_data';
+        $response = Http::get($apiUrl);
+        
+        // Check if the response is successful
+        if ($response->successful()) {
+            $bookingData = $response->json(); // Decode the JSON data
+        } else {
+            $bookingData = []; // Handle error or fallback
+        }
+
+        $users = lib_serviceMan();
+        return view('frontend.pages.booking.index',compact('bookingData'));
     }
 
     /**

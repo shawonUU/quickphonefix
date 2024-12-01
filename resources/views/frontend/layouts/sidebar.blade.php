@@ -25,7 +25,12 @@
 							<!-- Main -->
 
 						
-							
+							@can('Service Management')
+								<li class="menu-title"><span>Booking</span></li>
+								<li>
+									<a href="{{ route('booking.index') }}"><i class="fe fe-user"></i> <span> Booking List</span></a>									
+								</li>
+							@endcan
 
 							@can('Service Management')
 								<li class="menu-title"><span>Services</span></li>
