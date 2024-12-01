@@ -41,8 +41,9 @@ class FrontendController extends Controller
         });
 
         $yearlyRevenue = Service::selectRaw('YEAR(created_at) as year, SUM(bill) as total')
-            ->groupBy('year')
-            ->pluck('total', 'year');
+        ->whereRaw('YEAR(created_at) >= YEAR(CURDATE()) - 9')
+        ->groupBy('year')
+        ->pluck('total', 'year');
         
         
         return view('frontend.pages.index', compact('todaysRevenue','thisWeeksRevenue','thisMonthsRevenue','thisYearsRevenue','monthlyRevenue','yearlyRevenue'));

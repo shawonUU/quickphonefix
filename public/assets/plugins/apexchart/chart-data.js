@@ -90,8 +90,13 @@ $(document).ready(function() {
     }
 
     if($('#sales_chart_yearly').length > 0 ){
-      var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      var monthlyData = months.map(month => monthlyRevenue[month] || 0);
+      var years = [];
+      var currentYear = new Date().getFullYear();
+
+      for (var i = 0; i < 10; i++) {
+          years.push(currentYear - i);
+      }
+      var yearllyData = years.map(year => yearlyRevenue[year] || 0);
         var columnCtx = document.getElementById("sales_chart_yearly"),
         columnConfig = {
             colors: ['#7638ff', '#fda600'],
@@ -99,7 +104,7 @@ $(document).ready(function() {
                 {
                 name: "Received",
                 type: "column",
-                data: monthlyData
+                data: yearllyData
                 },
                 {
                 name: "Pending",
@@ -131,7 +136,7 @@ $(document).ready(function() {
                 colors: ['transparent']
             },
             xaxis: {
-                categories: months,
+                categories: years,
             },
             yaxis: {
                 title: {

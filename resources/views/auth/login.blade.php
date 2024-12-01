@@ -25,7 +25,7 @@
         <meta property="og:image:type" content="image/png">
         <meta property="og:image:width" content="1200" >
         <meta property="og:image:height" content="600" >
-		<title>Quick Phone Fix</title>
+		<title>Quick Phone Fix N More</title>
 		
 		<!-- Favicon -->
 		<!-- <link rel="shortcut icon" href="{{asset('assets')}}/img/favicon.png"> -->
@@ -53,8 +53,8 @@
 			<div class="login-wrapper">
 				<div class="container">
 				
-					<!-- <img class="img-fluid logo-dark mb-2 logo-color" src="{{asset('assets')}}/img/logo2.png" alt="Logo"> -->
-					<!-- <img class="img-fluid logo-light mb-2" src="{{asset('assets')}}/img/logo2-white.png" alt="Logo"> -->
+					<img class="img-fluid logo-dark mb-2 logo-color" src="{{asset('assets')}}/img/logo.png" alt="Logo">
+					<img class="img-fluid logo-light mb-2" src="{{asset('assets')}}/img/logo.png" alt="Logo">
 					<div class="loginbox">
 						
 						<div class="login-right">
