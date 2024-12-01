@@ -31,7 +31,6 @@ class BookingController extends Controller
             'product_name' => 'required|string|max:255',
             'product_number' => 'nullable|string|max:255',
             'details' => 'nullable|string',
-            'status' => 'required|in:0,1',
         ]);
 
         $customerByPhone = Customer::where('phone', $request->phone)->first();
@@ -102,7 +101,6 @@ class BookingController extends Controller
             'product_name' => 'required|string|max:255',
             'product_number' => 'nullable|string|max:255',
             'details' => 'nullable|string',
-            'status' => 'required|in:0,1',
         ]);
 
         $customerByPhone = Customer::where('phone', $request->phone)->first();
