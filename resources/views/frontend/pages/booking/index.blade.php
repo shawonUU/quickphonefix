@@ -5,7 +5,7 @@
   <!-- Page Header -->
   <div class="page-header">
     <div class="content-page-header">
-      <h5>Customers</h5>
+      <h5>Bookings</h5>
       <div class="list-btn">
         <ul class="filter-list">
           <li class="d-none">
@@ -49,7 +49,7 @@
             </a>
           </li>
           <li>
-            <a class="btn btn-primary" href="{{route('service.create')}}">
+            <a class="btn btn-primary d-none" href="{{route('service.create')}}">
               <i class="fa fa-plus-circle me-2" aria-hidden="true"></i>Add Service </a>
           </li>
         </ul>
@@ -118,7 +118,7 @@
                               <div class="dropdown-menu dropdown-menu-end">
                                 <ul>
                                   <li>
-                                    <a class="dropdown-item" href="">
+                                    <a class="dropdown-item d-none" href="">
                                       <i class="far fa-eye me-2"></i>View Details
                                     </a>
                                   </li>
