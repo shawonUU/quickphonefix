@@ -82,7 +82,7 @@
         <div class="card flex-fill">
           <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
-              <h5 class="card-title">Sales Analytics</h5>
+              <h5 class="card-title">Monthly Sales</h5>
 
               
             </div>
@@ -98,7 +98,7 @@
         <div class="card flex-fill">
           <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
-              <h5 class="card-title">Invoice Analytics</h5> 
+              <h5 class="card-title">Yearly sales</h5> 
             </div>
           </div>
           <div class="card-body">

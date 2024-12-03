@@ -24,6 +24,9 @@
 						<ul class="sidebar-vertical ">
 							<!-- Main -->
 
+								<li>
+									<a href="{{ route('index') }}"><i class="fe fe-user"></i> <span> Dashboard</span></a>									
+								</li>
 						
 							@can('Service Management')
 								<li class="menu-title"><span>Booking</span></li>
@@ -35,7 +38,8 @@
 							@can('Service Management')
 								<li class="menu-title"><span>Services</span></li>
 								<li>
-									<a href="{{ route('service.index') }}"><i class="fe fe-user"></i> <span> Service</span></a>
+									<a href="{{ route('service.index') }}"><i class="fe fe-user"></i> <span>Pending Service</span></a>
+									<a href="{{ route('service.complated') }}"><i class="fe fe-user"></i> <span>Completed Service</span></a>
 									<a href="{{ route('service.create') }}"><i class="fe fe-home"></i> <span> Add Service</span></a>
 								</li>
 							@endcan

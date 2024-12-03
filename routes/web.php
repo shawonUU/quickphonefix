@@ -56,6 +56,8 @@ use App\Http\Controllers\Admin\DelivaryPercentageController;
 |
 */
 
+Auth::routes();
+
 
 Route::get('/about', [FrontendController::class, 'about'])->name('about');
 Route::get('/services', [FrontendController::class, 'ourServices'])->name('services');
@@ -209,6 +211,9 @@ Route::group(['middleware' => ['permission:Administration']], function () {
 // Route::group(['middleware' => ['permission:Customer']], function () {
     Route::resource('service', ServiceController::class);
     Route::get('service/invoice/{id}', [ServiceController::class, 'makeInvoice'])->name('service.invoice');
+    Route::get('complated/service', [ServiceController::class, 'complatedService'])->name('service.complated');
+    Route::post('service/makecomplate/{id}', [ServiceController::class, 'makeComplate'])->name('service.makecomplate');
+    
 
     Route::resource('booking', BookingController::class);
     

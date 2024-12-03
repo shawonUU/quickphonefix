@@ -1,6 +1,28 @@
 @extends('frontend.layouts.app') 
 @section('content')
 
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+<style>
+	.select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
+  border-color: transparent transparent #888 transparent;
+  border-width: 0 !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+  border-color: #888 transparent transparent transparent;
+  border-style: solid;
+  border-width: 0 !important;
+  height: 0;
+  left: 50%;
+  margin-left: -4px;
+  margin-top: -2px;
+  position: absolute;
+  top: 50%;
+  width: 0;
+}
+</style>
+
 <div class="content container-fluid">
 					<div class="card mb-0">
 						<div class="card-body">
@@ -65,7 +87,12 @@
                                                 <div class="col-lg-4 col-md-6 col-sm-12">
 													<div class="input-block mb-3">
 														<label>Product Name <span class="text-danger">*</span></label>
-														<input type="text"  class="form-control" placeholder="Product Name" name="product_name" value="{{ $service->product_name }}" required>
+														<!-- <input type="text"  class="form-control" placeholder="Product Name" name="product_name" value="{{ $service->product_name }}" required> -->
+														<select name="product_name" id="" class="form-control js-example-basic-single" required>
+															@foreach ($products as $product)
+																<option value="{{$product->id}}" {{ strpos($service->product_name, $product->name) !== false ? 'selected' : ''}}>{{$product->name}}</option>
+															@endforeach
+														 </select>
 													</div>
 												</div>
 
@@ -85,7 +112,7 @@
 
                                                 <div class="col-lg-4 col-md-6 col-sm-12">
 													<div class="input-block mb-3">
-														<label>Bill <span class="text-danger">*</span></label>
+														<label>Price <span class="text-danger">*</span></label>
                                                         <input type="text"  class="form-control" placeholder="Bill" name="bill" value="{{ $service->bill }}" required>
 													</div>
 												</div>
@@ -113,7 +140,7 @@
 											</div>
 										</div>
 																	
-										<div class="add-customer-btns text-end">
+										<div class="add-customer-btns text-left">
 											<button type="submit" class="btn customer-btn-save">Update</button>
 										</div>
 									</form>
@@ -122,5 +149,17 @@
 						</div>
 					</div>
 				</div>
+
+
+				<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+  $(document).ready(function() {
+	
+    $('.js-example-basic-single').select2({
+		tags: true,
+	});
+  });
+</script>
 
 @endsection

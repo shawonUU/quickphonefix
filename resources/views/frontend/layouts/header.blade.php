@@ -22,6 +22,7 @@
 					</div>
 				</div>
 				<!-- Sidebar Toggle -->
+				 @auth
 				<a href="javascript:void(0);" id="toggle_btn">
 					<span class="toggle-bars">
 						<span class="bar-icons"></span>
@@ -33,7 +34,7 @@
 				<!-- /Sidebar Toggle -->
 				
 				<!-- Search -->
-				<div class="top-nav-search">
+				<div class="top-nav-search d-none">
 					<form>
 						<input type="text" class="form-control" placeholder="Search here">
 						<button class="btn" type="submit"><img src="{{asset('assets')}}/img/icons/search.svg" alt="img"></button>
@@ -71,10 +72,10 @@
 					</li>
 					<!-- /Flag -->
 					<li class="nav-item dropdown  flag-nav dropdown-heads">
-						<a class="nav-link" data-bs-toggle="dropdown" href="#" role="button">
+						<a class="nav-link d-none" data-bs-toggle="dropdown" href="#" role="button">
 							<i class="fe fe-bell"></i> <span class="badge rounded-pill"></span>
 						</a>
-						<div class="dropdown-menu notifications">
+						<div class="dropdown-menu notifications d-none">
 							<div class="topnav-dropdown-header">
 								<div class="notification-title">Notifications <a href="notifications.html">View all</a></div>
 								<a href="javascript:void(0)" class="clear-noti d-flex align-items-center">Mark all as read <i class="fe fe-check-circle"></i></a>
@@ -156,12 +157,12 @@
 					<li class="nav-item dropdown">
                         <a href="javascript:void(0)" class="user-link  nav-link" data-bs-toggle="dropdown">
                             <span class="user-img">
-                                <img src="{{asset('assets')}}/img/profiles/avatar-07.jpg" alt="img" class="profilesidebar">
+                                <img src="{{asset('frontend/users/'.auth()->user()->images)}}"  onerror="this.src='{{ asset('assets/img/favicon.png') }}'" alt="" class="profilesidebar">
                                 <span class="animate-circle"></span>
                             </span>
                             <span class="user-content">
-                                <span class="user-details">Admin</span>
-								<span class="user-name">John Smith</span>
+                                <!-- <span class="user-details">Admin</span> -->
+								<span class="user-name">{{auth()->user()->name}}</span>
                             </span>
                         </a>
                         <div class="dropdown-menu menu-drop-user">
@@ -194,6 +195,6 @@
 				</ul>
 				
 				<!-- /Header Menu -->
-				
+				@endauth
 			</div>
 			<!-- /Header -->

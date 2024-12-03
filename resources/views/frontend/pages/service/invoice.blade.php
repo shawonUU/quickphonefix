@@ -1040,9 +1040,9 @@
                       </tr>
                     <tr>
                       <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">Product Name</th>
-                      <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">Product Number</th>
+                      <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">EMEI Number</th>
                       <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">Service Warranty</th>
-                      <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">Bill</th>
+                      <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">Price</th>
                     </tr>
                     <tr>
                       <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">{{$service->product_name}}</td>
@@ -1153,9 +1153,9 @@
                       </tr>
                     <tr>
                       <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">Product Name</th>
-                      <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">Product Number</th>
+                      <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">EMEI Number</th>
                       <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">Service Warranty</th>
-                      <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">Bill</th>
+                      <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">Price</th>
                     </tr>
                     <tr>
                       <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">{{$service->product_name}}</td>

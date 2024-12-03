@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('warranty_duration');
             $table->bigInteger('repaired_by');
             $table->enum('status', [0, 1])->default(1);
+            $table->date('complated_date')->nullable();
             $table->timestamps();
         });
     }

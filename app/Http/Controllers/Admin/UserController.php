@@ -53,7 +53,7 @@ class UserController extends Controller
         $imageName = "";
         if ($request->hasFile('images')) {
             $image = $request->file('images');
-            $destinationPath = 'frontend/users/';
+            $destinationPath = public_path('frontend/users/');
             $imageName = now()->format('YmdHis') . '_' . Str::random(10) . '.' . $image->getClientOriginalExtension();
             $image->move($destinationPath, $imageName);
         }
@@ -116,10 +116,10 @@ class UserController extends Controller
 
         $validatedData = $request->validate($rules);
 
-        $imageName = $user->images; // Keep the existing image name if no new image is uploaded
+        $imageName = $user->images;
         if ($request->hasFile('images')) {
             $image = $request->file('images');
-            $destinationPath = 'frontend/users/';
+            $destinationPath = public_path('frontend/users/');
             $imageName = now()->format('YmdHis') . '_' . Str::random(10) . '.' . $image->getClientOriginalExtension();
             $image->move($destinationPath, $imageName);
         }

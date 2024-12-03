@@ -5,7 +5,8 @@
   <!-- Page Header -->
   <div class="page-header">
     <div class="content-page-header">
-      <h5>Customers</h5>
+      <h5>Services</h5>
+     
       <div class="list-btn">
         <ul class="filter-list">
           <li class="d-none">
@@ -55,6 +56,38 @@
         </ul>
       </div>
     </div>
+    <form action="{{route('service.index')}}" method="get">
+      <div class="row">
+        <div class="col-12 col-md-2">
+            <label for="">From</label>
+            <input type="date" name="form" class="form-control" value="{{isset($request) ? $request->from : ''}}">
+        </div>
+        <div class="col-12 col-md-2">
+          <label for="">To</label><br>
+          <input type="date" name="to" class="form-control" value="{{isset($request) ? $request->to : ''}}">
+        </div>
+        <div class="col-12 col-md-3">
+          <label for="">Search By</label><br>
+          <select name="serach_by" id="" class="form-select">
+            <option value="">--Select--</option>
+            <option value="name" {{ (isset($request) && $request->serach_by == 'name') ? 'selected' : ''}} >Name</option>
+            <option value="phone" {{ (isset($request) && $request->serach_by == 'phone') ? 'selected' : ''}}>Phone</option>
+            <option value="email" {{ (isset($request) && $request->serach_by == 'email') ? 'selected' : ''}}>Email</option>
+            <option value="product_name" {{ (isset($request) && $request->serach_by == 'product_name') ? 'selected' : ''}}>Product Name</option>
+            <option value="product_number" {{ (isset($request) && $request->serach_by == 'product_number') ? 'selected' : ''}}>Product Number</option>
+            <option value="repaired_by" {{ (isset($request) && $request->serach_by == 'repaired_by') ? 'selected' : ''}}>Repaired By</option>
+          </select>
+        </div>
+        <div class="col-12 col-md-3">
+          <label for="">Search Key</label><br>
+          <input type="text" name="key" class="form-control" value="{{isset($request) ? $request->key : ''}}">
+        </div>
+        <div class="col-12 col-md-2">
+          <label for=""></label>
+          <button type="submit" class="btn btn-primary" style="margin-top:25px;">Search</button>
+        </div>
+      </div>
+    </form>
   </div>
   <!-- /Page Header -->
   <!-- Search Filter -->
@@ -93,12 +126,13 @@
                 <thead class="thead-light">
                   <tr role="row">
                     <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="#: activate to sort column descending">#</th>
+                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending">Date</th>
                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending">Name</th>
                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending">Email</th>
                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending">Phone</th>
                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending">Product Name</th>
-                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending">Product Number</th>
-                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending">Bill</th>
+                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending">EMEI Number</th>
+                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending">Price</th>
                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending">Warranty</th>
                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending">Repaired By</th>
                     <th class="no-sort sorting_disabled" rowspan="1" colspan="1" aria-label="Actions">Actions</th>
@@ -107,7 +141,10 @@
                 <tbody>
                 @foreach ($services as $service)
                   <tr role="row" class="odd">
-                    <td class="sorting_1">1</td>
+                    <td class="sorting_1">{{$loop->index+1}}</td>
+                    <td>
+                      <h2 class="table-avatar"> <span>{{$service->created_at->format('Y-m-d')}}</span></h2>
+                    </td>
                     <td>
                       <h2 class="table-avatar">
                         <a href="profile.html" class="avatar avatar-md me-2 d-none">
@@ -125,7 +162,7 @@
                     </td>
                     <td> {{$service->product_name}} </td>
                     <td> {{$service->product_number}} </td>
-                    <td> {{$service->bill}} </td>
+                    <td> ${{$service->bill}} </td>
                     <td> {{$service->warranty_duration}} </td>
                     <td> {{getArrayData($users,$service->repaired_by)}} </td>
                     
@@ -140,6 +177,21 @@
                             <li>
                               <a class="dropdown-item" href="{{route('service.invoice', $service->id)}}">
                                 <i class="far fa-edit me-2"></i>Invoice </a>
+                            </li>
+                            <li>
+                              <a onclick="if (confirm('Are you sure to complete the service?')) { document.getElementById('serviceConfirm{{$service->id}}').submit(); }" class="dropdown-item" href="javascript:void(0)">
+                                <i class="far fa-edit me-2"></i>Complated </a>
+                                <form id="serviceConfirm{{$service->id}}" action="{{route('service.makecomplate', $service->id)}}" method="post">
+                                  @csrf
+                                </form>
+                            </li>
+                            <li>
+                              <a onclick="if (confirm('Are you sure to delete the service?')) { document.getElementById('serviceDelete{{$service->id}}').submit(); }" class="dropdown-item" href="javascript:void(0)">
+                                <i class="far fa-edit me-2"></i>Delete </a>
+                                <form id="serviceDelete{{$service->id}}" action="{{route('service.destroy', $service->id)}}" method="post">
+                                  @csrf
+                                  @method('DELETE')
+                                </form>
                             </li>
                             <li>
                               <a class="dropdown-item" href="{{route('service.edit', $service->id)}}">
@@ -157,6 +209,7 @@
                 @endforeach
                 </tbody>
               </table>
+              
               <div class="dataTables_length" id="DataTables_Table_0_length">
                 <label>
                   <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="custom-select custom-select-sm form-control form-control-sm">

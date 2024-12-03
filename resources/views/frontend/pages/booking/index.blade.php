@@ -118,7 +118,7 @@
                               <div class="dropdown-menu dropdown-menu-end">
                                 <ul>
                                   <li>
-                                    <a class="dropdown-item d-none" href="">
+                                    <a class="dropdown-item " href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#signup-modal">
                                       <i class="far fa-eye me-2"></i>View Details
                                     </a>
                                   </li>
@@ -126,6 +126,55 @@
                                 </ul>
                               </div>
                             </div>
+
+
+
+                            <div id="signup-modal" class="modal fade" tabindex="-1" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="text-center mt-2 mb-4">
+                    <div class="auth-logo">
+                        <a href="{{ route('index') }}" class="logo logo-dark">
+                            <span class="logo-lg">
+                                <img src="assets/img/logo.png" alt="Logo" height="42">
+                            </span>
+                        </a>
+                    </div>
+                </div>
+
+                <form class="px-3">
+                    <div class="mb-3">
+                        <label for="modalFullName" class="form-label">Name</label>
+                        <input class="form-control" type="text" id="modalFullName" disabled value="{{ $entry['full_name'] }}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="modalPhoneNumber" class="form-label">Phone Number</label>
+                        <input class="form-control" type="text" id="modalPhoneNumber" disabled value="{{ $entry['phone_number'] }}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="modalMessage" class="form-label">Message</label>
+                        <input class="form-control" type="text" id="modalMessage" disabled value="{{ $entry['message'] }}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="modalEmiNumber" class="form-label">EMI/Serial Number</label>
+                        <input class="form-control" type="text" id="modalEmiNumber" disabled value="{{ $entry['emi_number_or_serial_number'] }}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="modalAddress" class="form-label">Address</label>
+                        <input class="form-control" type="text" id="modalAddress" disabled value="{{ $entry['address'] }}">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
                           </td>
                         </tr>
                       @endforeach
