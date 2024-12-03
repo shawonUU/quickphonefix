@@ -26,13 +26,14 @@ class FrontendController extends Controller
     public function index()
     { 
         
-        $todaysRevenue = Service::whereDate('created_at', Carbon::today())->sum('bill');
-        $thisWeeksRevenue = Service::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->sum('bill');
-        $thisMonthsRevenue = Service::whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->sum('bill');
-        $thisYearsRevenue = Service::whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])->sum('bill');
+        $todaysRevenue = Service::whereDate('created_at', Carbon::today())->where('status','1')->sum('bill');
+        $thisWeeksRevenue = Service::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->where('status','1')->sum('bill');
+        $thisMonthsRevenue = Service::whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->where('status','1')->sum('bill');
+        $thisYearsRevenue = Service::whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])->where('status','1')->sum('bill');
 
         $monthlyRevenue = Service::selectRaw('MONTH(created_at) as month, SUM(bill) as total')
         ->whereYear('created_at', Carbon::now()->year)
+        ->where('status','1')
         ->groupBy('month')
         ->pluck('total', 'month')
         ->mapWithKeys(function ($total, $month) {
@@ -42,6 +43,7 @@ class FrontendController extends Controller
 
         $yearlyRevenue = Service::selectRaw('YEAR(created_at) as year, SUM(bill) as total')
         ->whereRaw('YEAR(created_at) >= YEAR(CURDATE()) - 9')
+        ->where('status','1')
         ->groupBy('year')
         ->pluck('total', 'year');
         

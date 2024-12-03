@@ -18,7 +18,7 @@ class PermissionSeeder extends Seeder
         ]);
 
         Permission::create([
-            'name' => 'Customer',
+            'name' => 'Booking',
             'guard_name' => 'web',
         ]);
 

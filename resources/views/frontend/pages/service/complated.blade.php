@@ -182,9 +182,13 @@
                               <a class="dropdown-item d-none" href="{{route('service.edit', $service->id)}}">
                                 <i class="far fa-edit me-2"></i>Edit </a>
                             </li>
-                            <li class="d-none">
-                              <a class="dropdown-item" href="">
-                                <i class="far fa-eye me-2"></i>View </a>
+                            <li>
+                              <a onclick="if (confirm('Are you sure to delete the service?')) { document.getElementById('serviceDelete{{$service->id}}').submit(); }" class="dropdown-item" href="javascript:void(0)">
+                                <i class="far fa-edit me-2"></i>Delete </a>
+                                <form id="serviceDelete{{$service->id}}" action="{{route('service.destroy', $service->id)}}" method="post">
+                                  @csrf
+                                  @method('DELETE')
+                                </form>
                             </li>
                           </ul>
                         </div>
