@@ -1048,7 +1048,7 @@
                       <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">{{$service->product_name}}</td>
                       <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">{{$service->product_number}}</td>
                       <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">{{$service->warranty_duration}} Days</td>
-                      <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">{{$service->bill}} ৳</td>
+                      <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">${{$service->bill}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -1161,7 +1161,7 @@
                       <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">{{$service->product_name}}</td>
                       <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">{{$service->product_number}}</td>
                       <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">{{$service->warranty_duration}} Days</td>
-                      <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">{{$service->bill}} ৳</td>
+                      <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">${{$service->bill}}</td>
                     </tr>
                   </tbody>
                 </table>
