@@ -1,6 +1,5 @@
 @extends('frontend.layouts.app') 
 @section('content')
-
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 <style>
@@ -29,14 +28,13 @@
 							<!-- Page Header -->
 							<div class="page-header">
 								<div class="content-page-header">
-									<h5>Update Service</h5>
+									<h5>Add Sales</h5>
 								</div>	
 							</div>
 							<!-- /Page Header -->				
 							<div class="row">
 								<div class="col-md-12">
-									<form action="{{route('service.update', $service->id)}}" method="post">
-                                        @method('PUT')
+									<form action="{{route('sales.store')}}" method="post">
                                         @csrf
 										<div class="form-group-item">
 											<h5 class="form-title d-none">Basic Details</h5>
@@ -61,87 +59,67 @@
 												<div class="col-lg-4 col-md-6 col-sm-12">
 													<div class="input-block mb-3">
 														<label>Name <span class="text-danger">*</span></label> 
-														<input type="text" name="name" class="form-control" placeholder="Enter Name" value="{{ $service->name }}" required>
+														<input type="text" name="name" class="form-control" placeholder="Enter Name" value="{{ old('name') }}" required>
 													</div>
 												</div>
 												<div class="col-lg-4 col-md-6 col-sm-12">
 													<div class="input-block mb-3">
 														<label>Phone<span class="text-danger">*</span> </label>
-														<input type="text"  class="form-control" placeholder="Phone Number" name="phone" value="{{ $service->phone }}" required>
+														<input type="text"  class="form-control" placeholder="Phone Number" name="phone" value="{{ old('phone') }}" required>
 													</div>
 												</div>
 												<div class="col-lg-4 col-md-6 col-sm-12">
 													<div class="input-block mb-3 " >
 														<label>Email </label>
-														<input type="email" name="email" class="form-control" placeholder="Enter Email Address" value="{{ $service->email }}">
+														<input type="email" name="email" class="form-control" placeholder="Enter Email Address" value="{{ old('email') }}">
 													</div>											
 												</div>
 
                                                 <div class="col-lg-4 col-md-6 col-sm-12">
 													<div class="input-block mb-3">
 														<label>Address </label>
-														<textarea type="text"  class="form-control" placeholder="Address" name="address" >{{ $service->address }}</textarea>
+														<textarea type="text"  class="form-control" placeholder="Address" name="address">{{ old('address') }}</textarea>
 													</div>
 												</div>
 
                                                 <div class="col-lg-4 col-md-6 col-sm-12">
 													<div class="input-block mb-3">
 														<label>Product Name <span class="text-danger">*</span></label>
-														<!-- <input type="text"  class="form-control" placeholder="Product Name" name="product_name" value="{{ $service->product_name }}" required> -->
-														<select name="product_name" id="" class="form-control js-example-basic-single" required>
+														<!-- <input type="text"  class="form-control" placeholder="Product Name" name="product_name" value="{{ old('product_name') }}" required> -->
+														 <select name="product_name" id="" class="form-control js-example-basic-single" required>
 															@foreach ($products as $product)
-																<option value="{{$product->id}}" {{ strpos($service->product_name, $product->name) !== false ? 'selected' : ''}}>{{$product->name}}</option>
+																<option value="{{$product->id}}" {{ old('product_name') ==  $product->id ? 'selected' : ''}}>{{$product->name}}</option>
 															@endforeach
 														 </select>
 													</div>
 												</div>
 
-                                                <div class="col-lg-4 col-md-6 col-sm-12">
-													<div class="input-block mb-3">
-														<label>Product EMEI or Serial number </label>
-														<input type="text"  class="form-control" placeholder="Product EMEI or Serial number" name="product_number" value="{{ $service->product_number }}">
-													</div>
-												</div>
-
-                                                <div class="col-lg-4 col-md-6 col-sm-12">
-													<div class="input-block mb-3">
-														<label>Service Details </label>
-														<textarea type="text"  class="form-control" placeholder="Service Details" name="details" >{{ $service->details }}</textarea>
-													</div>
-												</div>
-
+                                            
                                                 <div class="col-lg-4 col-md-6 col-sm-12">
 													<div class="input-block mb-3">
 														<label>Price <span class="text-danger">*</span></label>
-                                                        <input type="text"  class="form-control" placeholder="Price" name="bill" value="{{ $service->bill }}" required>
+                                                        <input onchange="getTotal()"  type="number"  class="form-control" placeholder="Price" id="price" name="price" value="{{ old('price') }}" required>
 													</div>
 												</div>
 
                                                 <div class="col-lg-4 col-md-6 col-sm-12">
 													<div class="input-block mb-3">
-														<label>Warranty Duration (In days) <span class="text-danger">*</span></label>
-                                                        <input type="number"  class="form-control" placeholder="Warranty Duration" name="warranty_duration" value="{{ $service->warranty_duration }}">
+														<label>Qty <span class="text-danger">*</span></label>
+                                                        <input onchange="getTotal()" type="number"  class="form-control" placeholder="Qty" id="qty" name="qty" value="{{ old('qty') }}" required>
 													</div>
 												</div>
 
                                                 <div class="col-lg-4 col-md-6 col-sm-12">
 													<div class="input-block mb-3">
-														<label>Repaired By <span class="text-danger">*</span></label>
-                                                        <Select class="form-select" name="repaired_by" required>
-                                                            <option value="">--Select--</option>
-                                                            @foreach ($serviceMans as $key =>  $user)
-															<option value="{{$key}}" {{ $service->repaired_by == $key ? 'selected' : '' }}>{{$user}}</option>
-                                                            @endforeach
-                                                        </Select>
+														<label>Total </label>
+                                                        <input id="total" type="number"  class="form-control" readonly>
 													</div>
 												</div>
-												
-												
 											</div>
 										</div>
 																	
 										<div class="add-customer-btns text-left">
-											<button type="submit" class="btn customer-btn-save">Update</button>
+											<button type="submit" class="btn customer-btn-save">Submit</button>
 										</div>
 									</form>
 								</div>
@@ -150,8 +128,7 @@
 					</div>
 				</div>
 
-
-				<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
   $(document).ready(function() {
@@ -160,6 +137,20 @@
 		tags: true,
 	});
   });
+
+  function getTotal(){
+    var price = document.getElementById("price").value.trim();
+    var qty = document.getElementById("qty").value.trim();
+    if(price<0){
+        document.getElementById("price").value = 0;
+        price = 0;
+    }
+    if(qty<0){
+        document.getElementById("qty").value = 0;
+        qty = 0;
+    }
+    document.getElementById("total").value = price * qty;
+  }
 </script>
 
 @endsection

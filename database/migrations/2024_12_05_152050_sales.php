@@ -11,20 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('sales', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('customer_id');
             $table->string('name');
             $table->string('phone');
-            $table->string('email')->nullable()->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('email');
             $table->text('address')->nullable();
-            $table->string('images')->nullable();
-            $table->integer('verification_code')->nullable();
-            $table->boolean('is_verified')->default(false);
-            $table->bigInteger('billing_address')->nullable();
-            $table->bigInteger('shipping_address')->nullable();
+            $table->string('product_name');
+            $table->double('price');
+            $table->double('qty');
+            $table->double('bill');
             $table->enum('status', [0, 1])->default(1);
-            $table->rememberToken();
             $table->timestamps();
         });
     }

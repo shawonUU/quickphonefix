@@ -19,6 +19,7 @@ use App\Models\Admin\ProductSize;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use App\Models\Service;
+use App\Models\Sale;
 use Carbon\Carbon;
 
 class FrontendController extends Controller
@@ -30,6 +31,11 @@ class FrontendController extends Controller
         $thisWeeksRevenue = Service::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->where('status','1')->sum('bill');
         $thisMonthsRevenue = Service::whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->where('status','1')->sum('bill');
         $thisYearsRevenue = Service::whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])->where('status','1')->sum('bill');
+
+        $todaysSalesRevenue = Sale::whereDate('created_at', Carbon::today())->where('status','1')->sum('bill');
+        $thisWeeksSalesRevenue = Sale::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->where('status','1')->sum('bill');
+        $thisMonthsSalesRevenue = Sale::whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->where('status','1')->sum('bill');
+        $thisYearsSalesRevenue = Sale::whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])->where('status','1')->sum('bill');
 
         $monthlyRevenue = Service::selectRaw('MONTH(created_at) as month, SUM(bill) as total')
         ->whereYear('created_at', Carbon::now()->year)
@@ -48,7 +54,7 @@ class FrontendController extends Controller
         ->pluck('total', 'year');
         
         
-        return view('frontend.pages.index', compact('todaysRevenue','thisWeeksRevenue','thisMonthsRevenue','thisYearsRevenue','monthlyRevenue','yearlyRevenue'));
+        return view('frontend.pages.index', compact('todaysRevenue','thisWeeksRevenue','thisMonthsRevenue','thisYearsRevenue','monthlyRevenue','yearlyRevenue','todaysSalesRevenue','thisWeeksSalesRevenue','thisMonthsSalesRevenue','thisYearsSalesRevenue',));
         // return view('frontend.pages.index', compact('homeItems'));
     }
 

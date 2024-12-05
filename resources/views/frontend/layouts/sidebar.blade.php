@@ -38,9 +38,17 @@
 							@can('Service Management')
 								<li class="menu-title"><span>Services</span></li>
 								<li>
+									<a href="{{ route('service.create') }}"><i class="fe fe-plus-circle"></i> <span> Add Service</span></a>
 									<a href="{{ route('service.index') }}"><i class="fe fe-refresh-cw"></i> <span>Pending Service</span></a>
 									<a href="{{ route('service.complated') }}"><i class="fe fe-check-square"></i> <span>Completed Service</span></a>
-									<a href="{{ route('service.create') }}"><i class="fe fe-plus-circle"></i> <span> Add Service</span></a>
+								</li>
+							@endcan
+
+							@can('Sales Management')
+								<li class="menu-title"><span>Sales</span></li>
+								<li>
+									<a href="{{ route('sales.create') }}"><i class="fe fe-plus-circle"></i> <span> Add Sales</span></a>
+									<a href="{{ route('sales.index') }}"><i class="fe fe-list"></i> <span>Sales List</span></a>
 								</li>
 							@endcan
 

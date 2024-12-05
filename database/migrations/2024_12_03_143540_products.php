@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->enum('type', [1, 2])->default(1);
             $table->enum('status', [0, 1])->default(1);
             $table->timestamps();
         });

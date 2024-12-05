@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Location;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\SalesController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\PaytrailController;
@@ -208,16 +209,21 @@ Route::group(['middleware' => ['permission:Administration']], function () {
     Route::resource('permission', PermissionController::class);
 });
 
-// Route::group(['middleware' => ['permission:Customer']], function () {
-    Route::resource('service', ServiceController::class);
-    Route::get('service/invoice/{id}', [ServiceController::class, 'makeInvoice'])->name('service.invoice');
-    Route::get('complated/service', [ServiceController::class, 'complatedService'])->name('service.complated');
-    Route::post('service/makecomplate/{id}', [ServiceController::class, 'makeComplate'])->name('service.makecomplate');
-    
+    Route::group(['middleware' => ['permission:Service Management']], function () {
+        Route::resource('service', ServiceController::class);
+        Route::get('service/invoice/{id}', [ServiceController::class, 'makeInvoice'])->name('service.invoice');
+        Route::get('complated/service', [ServiceController::class, 'complatedService'])->name('service.complated');
+        Route::post('service/makecomplate/{id}', [ServiceController::class, 'makeComplate'])->name('service.makecomplate');
+
+    });
+    Route::group(['middleware' => ['permission:Service Management']], function () {
+        Route::resource('sales', SalesController::class);
+        Route::get('sales/invoice/{id}', [SalesController::class, 'makeInvoice'])->name('sales.invoice');
+    });
 
     Route::resource('booking', BookingController::class);
     
-// });
+
 
 Route::get('/success', [PaytrailController::class, 'success']);
 Route::get('/cancel', [PaytrailController::class, 'cancel']);

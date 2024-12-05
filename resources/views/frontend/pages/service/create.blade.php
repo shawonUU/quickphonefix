@@ -77,8 +77,8 @@
 
                                                 <div class="col-lg-4 col-md-6 col-sm-12">
 													<div class="input-block mb-3">
-														<label>Address <span class="text-danger">*</span></label>
-														<textarea type="text"  class="form-control" placeholder="Address" name="address" required>{{ old('address') }}</textarea>
+														<label>Address </label>
+														<textarea type="text"  class="form-control" placeholder="Address" name="address">{{ old('address') }}</textarea>
 													</div>
 												</div>
 
@@ -96,8 +96,8 @@
 
                                                 <div class="col-lg-4 col-md-6 col-sm-12">
 													<div class="input-block mb-3">
-														<label>Product EMEI or Serial number <span class="text-danger">*</span></label>
-														<input type="text"  class="form-control" placeholder="Product EMEI or Serial number" name="product_number" value="{{ old('product_number') }}" required>
+														<label>Product EMEI or Serial number </label>
+														<input type="text"  class="form-control" placeholder="Product EMEI or Serial number" name="product_number" value="{{ old('product_number') }}" >
 													</div>
 												</div>
 
@@ -111,7 +111,7 @@
                                                 <div class="col-lg-4 col-md-6 col-sm-12">
 													<div class="input-block mb-3">
 														<label>Price <span class="text-danger">*</span></label>
-                                                        <input type="number"  class="form-control" placeholder="Bill" name="bill" value="{{ old('bill') }}" required>
+                                                        <input type="number"  class="form-control" placeholder="Price" name="bill" value="{{ old('bill') }}" required>
 													</div>
 												</div>
 

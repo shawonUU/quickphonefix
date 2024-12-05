@@ -164,7 +164,7 @@
                     <td> {{$service->product_number}} </td>
                     <td> ${{$service->bill}} </td>
                     <td> {{$service->warranty_duration}} </td>
-                    <td> {{getArrayData($users,$service->repaired_by)}} </td>
+                    <td> {{$service->repaired_by}} </td>
                     
                     
                     <td class="d-flex align-items-center">
@@ -175,7 +175,7 @@
                         <div class="dropdown-menu dropdown-menu-end">
                           <ul>
                             <li>
-                              <a class="dropdown-item" href="{{route('service.invoice', $service->id)}}">
+                              <a class="dropdown-item" target="_blank" href="{{route('service.invoice', $service->id)}}">
                                 <i class="far fa-edit me-2"></i>Invoice </a>
                             </li>
                             <li>

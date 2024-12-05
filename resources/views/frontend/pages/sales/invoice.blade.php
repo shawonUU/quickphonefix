@@ -1024,31 +1024,18 @@
                 <table class="table mb-0 text table-borderless">
                   <tbody>
                     <tr style="border-bottom: 1px dashed ">
-                      <th scope="col" class="fk-print-text fk-print-text--bold xxsm-text text-capitalize" style="font-size: 14px;" colspan="4">Service Info:</th>
+                      <th scope="col" class="fk-print-text fk-print-text--bold xxsm-text text-capitalize" style="font-size: 14px;" colspan="4">Sales Info:</th>
                     </tr>
-                    @if($service->details != "")
-                      <tr>
-                        <td class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;" colspan="4">
-                            Details: <br>
-                            {{$service->details}}
-                        </td>
-                      </tr>
-                    @endif
-                    <tr>
-                        <td class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;" colspan="4">
-                            Repaired By: {{getArrayData($serviceMans,$service->repaired_by)}}
-                        </td>
-                      </tr>
                     <tr>
                       <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">Product Name</th>
-                      <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">EMEI Number</th>
-                      <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">Service Warranty</th>
                       <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">Price</th>
+                      <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">Qty</th>
+                      <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">Total Price</th>
                     </tr>
                     <tr>
                       <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">{{$service->product_name}}</td>
-                      <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">{{$service->product_number}}</td>
-                      <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">{{$service->warranty_duration}} Days</td>
+                      <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">${{$service->price}}</td>
+                      <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">{{$service->qty}}</td>
                       <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">${{$service->bill}}</td>
                     </tr>
                   </tbody>
@@ -1138,31 +1125,18 @@
                 <table class="table mb-0 text table-borderless">
                   <tbody>
                     <tr style="border-bottom: 1px dashed ">
-                      <th scope="col" class="fk-print-text fk-print-text--bold xxsm-text text-capitalize" style="font-size: 14px;" colspan="4">Service Info:</th>
+                      <th scope="col" class="fk-print-text fk-print-text--bold xxsm-text text-capitalize" style="font-size: 14px;" colspan="4">Sales Info:</th>
                     </tr>
-                    @if($service->details != "")
-                      <tr>
-                        <td class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;" colspan="4">
-                            Details: <br>
-                            {{$service->details}}
-                        </td>
-                      </tr>
-                    @endif
-                    <tr>
-                        <td class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;" colspan="4">
-                            Repaired By: {{getArrayData($serviceMans,$service->repaired_by)}}
-                        </td>
-                      </tr>
                     <tr>
                       <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">Product Name</th>
-                      <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">EMEI Number</th>
-                      <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">Service Warranty</th>
                       <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">Price</th>
+                      <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">Qty</th>
+                      <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">Total Price</th>
                     </tr>
                     <tr>
                       <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">{{$service->product_name}}</td>
-                      <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">{{$service->product_number}}</td>
-                      <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">{{$service->warranty_duration}} Days</td>
+                      <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">${{$service->price}}</td>
+                      <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">{{$service->qty}}</td>
                       <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">${{$service->bill}}</td>
                     </tr>
                   </tbody>

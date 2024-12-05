@@ -26,6 +26,11 @@ class PermissionSeeder extends Seeder
             'name' => 'Service Management',
             'guard_name' => 'web',
         ]);
+
+        Permission::create([
+            'name' => 'Sales Management',
+            'guard_name' => 'web',
+        ]);
         
         Permission::create([
             'name' => 'Settings',

@@ -3,45 +3,37 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Service;
+use App\Models\Sale;
 use App\Models\Customer;
 use App\Models\User;
 use App\Models\Product;
 use Input;
 use Validator;
 
-class ServiceController extends Controller
+class SalesController extends Controller
 {
-        /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
 
-
-        $services = Service::join('users','users.id','=','services.repaired_by')
-                    ->select('services.*','users.name as repaired_by');
+        $services = Sale::query();
         
         if ($request->from != "" && $request->to != "") {
-            $services = $services->whereBetween('services.created_at', [$request->from, $request->to]);
+            $services = $services->whereBetween('sales.created_at', [$request->from, $request->to]);
         }
 
-        // return $request->all();
-
         if ($request->serach_by != "" && $request->key != "") {
-            // return "dhg";
            $services = $services->where($request->serach_by, 'like', '%' . $request->key . '%');
         }
 
         if($request->from == "" && $request->to == "" && $request->serach_by == "" && $request->key == ""){
-           // $services = $services->whereBetween('services.created_at', [date('Y-m-d'), date('Y-m-d')]);
+            $startOfDay = date('Y-m-d 00:00:00');
+            $endOfDay = date('Y-m-d 23:59:59');
+            $services = $services->whereBetween('sales.created_at', [$startOfDay, $endOfDay]);
         }
 
-        $services = $services->where('services.status','0');
         $services = $services->orderBy('id','desc')->get();
 
-        $users = lib_serviceMan();
-        return view('frontend.pages.service.index',compact('services','users','request'));
+        return view('frontend.pages.sales.index',compact('services','request'));
     }
 
     /**
@@ -49,9 +41,8 @@ class ServiceController extends Controller
      */
     public function create()
     {
-        $users  = User::get();
-        $products = Product::where('status','1')->where('type','1')->get();
-        return view('frontend.pages.service.create',compact('users','products'));
+        $products = Product::where('status','1')->where('type','2')->get();
+        return view('frontend.pages.sales.create',compact('products'));
     }
 
     /**
@@ -67,10 +58,8 @@ class ServiceController extends Controller
             'phone' => 'required|numeric',
             'address' => 'nullable',
             'product_name' => 'required',
-            'product_number' => 'nullable',
-            'bill' => 'required|numeric',
-            'warranty_duration' => 'required|numeric',
-            'repaired_by' => 'required|numeric',
+            'price' => 'required|numeric',
+            'qty' => 'required|numeric',
         ];
         $validation = Validator::make($attributes, $rules);
         if ($validation->fails()) {
@@ -80,7 +69,7 @@ class ServiceController extends Controller
         if(!is_numeric($request->product_name)){
             $product = new Product;
             $product->name = $request->product_name;
-            $product->type = '1';
+            $product->type = '2';
             $product->save();
         }else{
             $product = Product::where('id', $request->product_name)->first();
@@ -107,19 +96,16 @@ class ServiceController extends Controller
         $customer->address = $request->address;
         $customer->save();
 
-        $service = new Service;
+        $service = new Sale;
         $service->customer_id = $customer->id;
         $service->name = $customer->name;
         $service->phone = $customer->phone;
         $service->email = $customer->email;
         $service->address = $customer->address;
         $service->product_name = $request->product_name;
-        $service->product_number = $request->product_number;
-        $service->bill = $request->bill;
-        $service->details = $request->details;
-        $service->warranty_duration = $request->warranty_duration;
-        $service->repaired_by = $request->repaired_by;
-        $service->status = '0';
+        $service->price = $request->price;
+        $service->qty = $request->qty;
+        $service->bill = $request->price * $request->qty;
         $service->save();
 
         return redirect()->back()->with(['success' => getNotify(1)]);
@@ -139,15 +125,14 @@ class ServiceController extends Controller
      */
     public function edit(string $id)
     {
-        $service = Service::join('customers','customers.id','=','services.customer_id')
-                    ->where('services.id',$id)
-                    ->select('services.*')
+        $service = Sale::join('customers','customers.id','=','sales.customer_id')
+                    ->where('sales.id',$id)
+                    ->select('sales.*')
                     ->first();
         if(!$service)abort(404);
-        $products = Product::where('status','1')->where('type','1')->get();
-        $serviceMans = lib_serviceMan();
+        $products = Product::where('status','1')->where('type','2')->get();
 
-        return view('frontend.pages.service.edit',compact('service','serviceMans','products'));
+        return view('frontend.pages.sales.edit',compact('service','products'));
     }
 
     /**
@@ -155,7 +140,7 @@ class ServiceController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $service = Service::where('id',$id)->first();
+        $service = Sale::where('id',$id)->first();
         if(!$service)abort(404);
 
         $attributes = $request->all();
@@ -165,10 +150,8 @@ class ServiceController extends Controller
             'phone' => 'required|numeric',
             'address' => 'nullable',
             'product_name' => 'required',
-            'product_number' => 'nullable',
-            'bill' => 'required|numeric',
-            'warranty_duration' => 'required|numeric',
-            'repaired_by' => 'required|numeric',
+            'price' => 'required|numeric',
+            'qty' => 'required|numeric',
         ];
         $validation = Validator::make($attributes, $rules);
         if ($validation->fails()) {
@@ -177,6 +160,7 @@ class ServiceController extends Controller
 
         if(!is_numeric($request->product_name)){
             $product = new Product;
+            $product->type = '2';
             $product->name = $request->product_name;
             $product->save();
         }else{
@@ -210,15 +194,12 @@ class ServiceController extends Controller
         $service->email = $customer->email;
         $service->address = $customer->address;
         $service->product_name = $request->product_name;
-        $service->product_number = $request->product_number;
-        $service->bill = $request->bill;
-        $service->details = $request->details;
-        $service->warranty_duration = $request->warranty_duration;
-        $service->repaired_by = $request->repaired_by;
-        $service->update();
+        $service->price = $request->price;
+        $service->qty = $request->qty;
+        $service->bill = $request->price * $request->qty;
+        $service->save();
 
         return redirect()->back()->with(['success' => getNotify(2)]);
-
 
     }
 
@@ -227,7 +208,7 @@ class ServiceController extends Controller
      */
     public function destroy(string $id)
     {
-        $service = Service::where('id',$id)->first();
+        $service = Sale::where('id',$id)->first();
         if(!$service)abort(404);
         $service->delete();
 
@@ -235,49 +216,9 @@ class ServiceController extends Controller
     }
 
     public function makeInvoice(Request $request, $serviceId){
-        $service = Service::join('customers','customers.id','=','services.customer_id')
-                    ->where('services.id',$serviceId)
-                    ->select('services.*')
-                    ->first();
+        $service = Sale::first();
         if(!$service)abort(404);
-        $serviceMans = lib_serviceMan();
 
-        return view('frontend.pages.service.invoice',compact('service','serviceMans'));
+        return view('frontend.pages.sales.invoice',compact('service'));
     }
-
-    public function complatedService(Request $request){
-        $services = Service::join('users','users.id','=','services.repaired_by')
-                    ->select('services.*','users.name as repaired_by');
-
-        if ($request->from != "" && $request->to != "") {
-            $services = $services->whereBetween('services.created_at', [$request->from, $request->to]);
-        }
-
-        if ($request->serach_by != "" && $request->key != "") {
-            $services = $services->where($request->serach_by, 'like', '%' . $request->key . '%');
-        }
-
-        if($request->from == "" && $request->to == "" && $request->serach_by == "" && $request->key == ""){
-            $startOfDay = date('Y-m-d 00:00:00');
-            $endOfDay = date('Y-m-d 23:59:59');
-            $services = $services->whereBetween('services.created_at', [$startOfDay, $endOfDay]);
-        }
-
-        $services = $services->where('services.status','1');
-        $services = $services->orderBy('id','desc')->get();
-
-        $users = lib_serviceMan();
-        return view('frontend.pages.service.complated',compact('services','users','request'));
-    }
-
-    public function makeComplate(Request $request, string $id){
-        $service = Service::where('id',$id)->first();
-        if(!$service)abort(404);
-        $service->status = '1';
-        $service->complated_date = date('Y-m-d');
-        $service->update();
-
-        return redirect()->back()->with(['success' => getNotify(2)]);
-    } 
-
 }

@@ -29,13 +29,13 @@
 							<!-- Page Header -->
 							<div class="page-header">
 								<div class="content-page-header">
-									<h5>Update Service</h5>
+									<h5>Update Sales</h5>
 								</div>	
 							</div>
 							<!-- /Page Header -->				
 							<div class="row">
 								<div class="col-md-12">
-									<form action="{{route('service.update', $service->id)}}" method="post">
+									<form action="{{route('sales.update', $service->id)}}" method="post">
                                         @method('PUT')
                                         @csrf
 										<div class="form-group-item">
@@ -98,44 +98,26 @@
 
                                                 <div class="col-lg-4 col-md-6 col-sm-12">
 													<div class="input-block mb-3">
-														<label>Product EMEI or Serial number </label>
-														<input type="text"  class="form-control" placeholder="Product EMEI or Serial number" name="product_number" value="{{ $service->product_number }}">
-													</div>
-												</div>
-
-                                                <div class="col-lg-4 col-md-6 col-sm-12">
-													<div class="input-block mb-3">
-														<label>Service Details </label>
-														<textarea type="text"  class="form-control" placeholder="Service Details" name="details" >{{ $service->details }}</textarea>
-													</div>
-												</div>
-
-                                                <div class="col-lg-4 col-md-6 col-sm-12">
-													<div class="input-block mb-3">
 														<label>Price <span class="text-danger">*</span></label>
-                                                        <input type="text"  class="form-control" placeholder="Price" name="bill" value="{{ $service->bill }}" required>
+                                                        <input onchange="getTotal()" type="text"  class="form-control" placeholder="Price" id="price" name="price" value="{{ $service->price }}" required>
 													</div>
 												</div>
 
                                                 <div class="col-lg-4 col-md-6 col-sm-12">
 													<div class="input-block mb-3">
-														<label>Warranty Duration (In days) <span class="text-danger">*</span></label>
-                                                        <input type="number"  class="form-control" placeholder="Warranty Duration" name="warranty_duration" value="{{ $service->warranty_duration }}">
+														<label>Qty <span class="text-danger">*</span></label>
+                                                        <input onchange="getTotal()" type="number"  class="form-control" placeholder="Qty" id="qty" name="qty" value="{{ $service->qty }}" required>
 													</div>
 												</div>
 
                                                 <div class="col-lg-4 col-md-6 col-sm-12">
 													<div class="input-block mb-3">
-														<label>Repaired By <span class="text-danger">*</span></label>
-                                                        <Select class="form-select" name="repaired_by" required>
-                                                            <option value="">--Select--</option>
-                                                            @foreach ($serviceMans as $key =>  $user)
-															<option value="{{$key}}" {{ $service->repaired_by == $key ? 'selected' : '' }}>{{$user}}</option>
-                                                            @endforeach
-                                                        </Select>
+														<label>Total </label>
+                                                        <input id="total" type="number"  class="form-control" value="{{ $service->bill }}" readonly>
 													</div>
 												</div>
-												
+
+                                                
 												
 											</div>
 										</div>
@@ -160,6 +142,20 @@
 		tags: true,
 	});
   });
+
+  function getTotal(){
+    var price = document.getElementById("price").value.trim();
+    var qty = document.getElementById("qty").value.trim();
+    if(price<0){
+        document.getElementById("price").value = 0;
+        price = 0;
+    }
+    if(qty<0){
+        document.getElementById("qty").value = 0;
+        qty = 0;
+    }
+    document.getElementById("total").value = price * qty;
+  }
 </script>
 
 @endsection
