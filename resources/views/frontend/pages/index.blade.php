@@ -3,6 +3,9 @@
 
   <div class="content container-fluid">
     <div class="row">
+      <div class="col-12">
+        <h5>Services Report</h5>
+      </div>
       <div class="col-xl-3 col-sm-6 col-12">
         <div class="card">
           <div class="card-body">
@@ -74,6 +77,10 @@
             
           </div>
         </div>
+      </div>
+
+      <div class="col-12">
+        <h5>Sales Report</h5>
       </div>
 
       <div class="col-xl-3 col-sm-6 col-12">

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->bigInteger('customer_id');
             $table->string('name');
             $table->string('phone');
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->text('address')->nullable();
             $table->string('product_name');
             $table->double('price');
