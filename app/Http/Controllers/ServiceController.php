@@ -258,9 +258,9 @@ class ServiceController extends Controller
         }
 
         if($request->from == "" && $request->to == "" && $request->serach_by == "" && $request->key == ""){
-            $startOfDay = date('Y-m-d 00:00:00');
-            $endOfDay = date('Y-m-d 23:59:59');
-            $services = $services->whereBetween('services.created_at', [$startOfDay, $endOfDay]);
+            $startOfMonth = date('Y-m-01 00:00:00');
+            $endOfMonth = date('Y-m-t 23:59:59');
+            $services = $services->whereBetween('services.created_at', [$startOfMonth, $endOfMonth]);
         }
 
         $services = $services->where('services.status','1');

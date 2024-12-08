@@ -56,7 +56,7 @@
         </ul>
       </div>
     </div>
-    <form action="{{route('service.index')}}" method="get">
+    <form action="{{route('sales.index')}}" method="get">
       <div class="row">
         <div class="col-12 col-md-2">
             <label for="">From</label>
