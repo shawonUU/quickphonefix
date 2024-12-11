@@ -18,11 +18,13 @@ class SalesController extends Controller
         $services = Sale::query();
         
         if ($request->from != "" && $request->to != "") {
-            $services = $services->whereBetween('sales.created_at', [$request->from, $request->to]);
+            $from = date('Y-m-d 00:00:00', strtotime($request->from));
+            $to = date('Y-m-d 23:59:59', strtotime($request->to));
+            $services = $services->whereBetween('sales.created_at', [$from, $to]);
         }
 
         if ($request->serach_by != "" && $request->key != "") {
-           $services = $services->where($request->serach_by, 'like', '%' . $request->key . '%');
+           $services = $services->where('sales.'.$request->serach_by, 'like', '%' . $request->key . '%');
         }
 
         if($request->from == "" && $request->to == "" && $request->serach_by == "" && $request->key == ""){

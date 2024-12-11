@@ -19,26 +19,20 @@ class ServiceController extends Controller
     {
 
 
-        $services = Service::join('users','users.id','=','services.repaired_by')
-                    ->select('services.*','users.name as repaired_by');
+        $services = Service::join('users','users.id','=','services.repaired_by');
         
         if ($request->from != "" && $request->to != "") {
-            $services = $services->whereBetween('services.created_at', [$request->from, $request->to]);
+            $from = date('Y-m-d 00:00:00', strtotime($request->from));
+            $to = date('Y-m-d 23:59:59', strtotime($request->to));
+            $services = $services->whereBetween('services.created_at', [$from, $to]);
         }
-
-        // return $request->all();
 
         if ($request->serach_by != "" && $request->key != "") {
-            // return "dhg";
-           $services = $services->where($request->serach_by, 'like', '%' . $request->key . '%');
-        }
-
-        if($request->from == "" && $request->to == "" && $request->serach_by == "" && $request->key == ""){
-           // $services = $services->whereBetween('services.created_at', [date('Y-m-d'), date('Y-m-d')]);
+           $services = $services->where('services.'.$request->serach_by, 'like', '%' . $request->key . '%');
         }
 
         $services = $services->where('services.status','0');
-        $services = $services->orderBy('id','desc')->get();
+        $services = $services->select('services.*','users.name as repaired_by')->orderBy('id','desc')->get();
 
         $users = lib_serviceMan();
         return view('frontend.pages.service.index',compact('services','users','request'));
@@ -246,15 +240,16 @@ class ServiceController extends Controller
     }
 
     public function complatedService(Request $request){
-        $services = Service::join('users','users.id','=','services.repaired_by')
-                    ->select('services.*','users.name as repaired_by');
+        $services = Service::join('users','users.id','=','services.repaired_by');
 
         if ($request->from != "" && $request->to != "") {
-            $services = $services->whereBetween('services.created_at', [$request->from, $request->to]);
+            $from = date('Y-m-d 00:00:00', strtotime($request->from));
+            $to = date('Y-m-d 23:59:59', strtotime($request->to));
+            $services = $services->whereBetween('services.created_at', [$from, $to]);
         }
 
         if ($request->serach_by != "" && $request->key != "") {
-            $services = $services->where($request->serach_by, 'like', '%' . $request->key . '%');
+            $services = $services->where('services.'.$request->serach_by, 'like', '%' . $request->key . '%');
         }
 
         if($request->from == "" && $request->to == "" && $request->serach_by == "" && $request->key == ""){
@@ -264,7 +259,7 @@ class ServiceController extends Controller
         }
 
         $services = $services->where('services.status','1');
-        $services = $services->orderBy('id','desc')->get();
+        $services = $services->select('services.*','users.name as repaired_by')->orderBy('id','desc')->get();
 
         $users = lib_serviceMan();
         return view('frontend.pages.service.complated',compact('services','users','request'));

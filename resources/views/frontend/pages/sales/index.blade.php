@@ -60,7 +60,7 @@
       <div class="row">
         <div class="col-12 col-md-2">
             <label for="">From</label>
-            <input type="date" name="form" class="form-control" value="{{isset($request) ? $request->from : ''}}">
+            <input type="date" name="from" class="form-control" value="{{isset($request) ? $request->from : ''}}">
         </div>
         <div class="col-12 col-md-2">
           <label for="">To</label><br>
