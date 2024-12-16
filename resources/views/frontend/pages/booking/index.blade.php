@@ -131,7 +131,7 @@
 
 
 
-                            <div id="signup-modal" class="modal fade" tabindex="-1" style="display: none;" aria-hidden="true">
+  <div id="signup-modal" class="modal fade" tabindex="-1" style="display: none;" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
@@ -179,7 +179,7 @@
             </div>
         </div>
     </div>
-</div>
+  </div>
 
 
                           </td>

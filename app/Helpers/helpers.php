@@ -681,6 +681,14 @@ function targetedDeliveryChargeParcentage(){
   return $closestMatch;
 }
 
+function paymentMethods(){
+  return[
+    '1' => 'Cash Payment',
+    '2' => 'Card Payment',
+    '3' => 'Other Payment',
+  ];
+}
+
 
 
 function allDistrict(){

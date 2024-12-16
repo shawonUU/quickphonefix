@@ -133,6 +133,8 @@
                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending">Product Name</th>
                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending">EMEI Number</th>
                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending">Price</th>
+                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending">Paid Amount</th>
+                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending">Due Amount</th>
                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending">Warranty</th>
                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending">Repaired By</th>
                     <th class="no-sort sorting_disabled" rowspan="1" colspan="1" aria-label="Actions">Actions</th>
@@ -163,6 +165,8 @@
                     <td> {{$service->product_name}} </td>
                     <td> {{$service->product_number}} </td>
                     <td> ${{$service->bill}} </td>
+                    <td> ${{$service->paid_amount}} </td>
+                    <td> ${{$service->due_amount}} </td>
                     <td> {{$service->warranty_duration}} </td>
                     <td> {{$service->repaired_by}} </td>
                     
@@ -174,6 +178,10 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
                           <ul>
+                            <li>
+                              <a class="dropdown-item" href="{{route('payments', ['id' => $service->id, 'payment_for' => '1'])}}">
+                                <i class="far fa-edit me-2"></i>Payments </a>
+                            </li>
                             <li>
                               <a class="dropdown-item" target="_blank" href="{{route('service.invoice', $service->id)}}">
                                 <i class="far fa-edit me-2"></i>Invoice </a>

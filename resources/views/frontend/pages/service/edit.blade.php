@@ -112,13 +112,6 @@
 
                                                 <div class="col-lg-4 col-md-6 col-sm-12">
 													<div class="input-block mb-3">
-														<label>Price <span class="text-danger">*</span></label>
-                                                        <input type="text"  class="form-control" placeholder="Price" name="bill" value="{{ $service->bill }}" required>
-													</div>
-												</div>
-
-                                                <div class="col-lg-4 col-md-6 col-sm-12">
-													<div class="input-block mb-3">
 														<label>Warranty Duration (In days) <span class="text-danger">*</span></label>
                                                         <input type="number"  class="form-control" placeholder="Warranty Duration" name="warranty_duration" value="{{ $service->warranty_duration }}">
 													</div>
@@ -133,6 +126,28 @@
 															<option value="{{$key}}" {{ $service->repaired_by == $key ? 'selected' : '' }}>{{$user}}</option>
                                                             @endforeach
                                                         </Select>
+													</div>
+												</div>
+
+
+												<div class="col-lg-4 col-md-6 col-sm-12">
+													<div class="input-block mb-3">
+														<label>Price <span class="text-danger">*</span></label>
+                                                        <input onchange="calculateDue()" type="text"  class="form-control" placeholder="Price" id="bill" name="bill" value="{{ $service->bill }}" required>
+													</div>
+												</div>
+
+												<div class="col-lg-4 col-md-6 col-sm-12">
+													<div class="input-block mb-3">
+														<label>Paid Amount</label>
+                                                        <input type="number"  class="form-control" placeholder="Paid Amount" id="paid_amount" name="paid_amount" value="{{ $service->paid_amount }}" readonly>
+													</div>
+												</div>
+
+												<div class="col-lg-4 col-md-6 col-sm-12">
+													<div class="input-block mb-3">
+														<label>Due Amount</label>
+                                                        <input type="number"  class="form-control" placeholder="Due Amount" id="due_amount" name="due_amount" value="{{ $service->due_amount }}" readonly>
 													</div>
 												</div>
 												
@@ -160,6 +175,13 @@
 		tags: true,
 	});
   });
+
+  function calculateDue(){
+	var bill = (document.getElementById("bill").value.trim() * 1)??0;
+	var paid_amount = (document.getElementById("paid_amount").value.trim() * 1)??0;
+	
+	document.getElementById("due_amount").value = Math.max(0, bill-paid_amount);
+  }
 </script>
 
 @endsection

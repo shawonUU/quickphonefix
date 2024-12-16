@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Location;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\FrontendController;
@@ -209,19 +210,31 @@ Route::group(['middleware' => ['permission:Administration']], function () {
     Route::resource('permission', PermissionController::class);
 });
 
-    Route::group(['middleware' => ['permission:Service Management']], function () {
-        Route::resource('service', ServiceController::class);
-        Route::get('service/invoice/{id}', [ServiceController::class, 'makeInvoice'])->name('service.invoice');
-        Route::get('complated/service', [ServiceController::class, 'complatedService'])->name('service.complated');
-        Route::post('service/makecomplate/{id}', [ServiceController::class, 'makeComplate'])->name('service.makecomplate');
+Route::group(['middleware' => ['permission:Service Management']], function () {
+    Route::resource('service', ServiceController::class);
+    Route::get('service/invoice/{id}', [ServiceController::class, 'makeInvoice'])->name('service.invoice');
+    Route::get('complated/service', [ServiceController::class, 'complatedService'])->name('service.complated');
+    Route::post('service/makecomplate/{id}', [ServiceController::class, 'makeComplate'])->name('service.makecomplate');
 
-    });
-    Route::group(['middleware' => ['permission:Service Management']], function () {
-        Route::resource('sales', SalesController::class);
-        Route::get('sales/invoice/{id}', [SalesController::class, 'makeInvoice'])->name('sales.invoice');
-    });
+    // Route::get('service/payments/{id}', [PaymentController::class, 'payments'])->name('service.payments');
+    // Route::post('service/add/payment', [PaymentController::class, 'addPayment'])->name('service.add.payment');
+    // Route::post('service/update/payment/{id}', [PaymentController::class, 'updatePayment'])->name('service.update.payment');
+    // Route::delete('service/delete/payment/{id}', [PaymentController::class, 'deletePayment'])->name('service.delete.payment');
 
-    Route::resource('booking', BookingController::class);
+});
+Route::group(['middleware' => ['permission:Sales Management']], function () {
+    Route::resource('sales', SalesController::class);
+    Route::get('sales/invoice/{id}', [SalesController::class, 'makeInvoice'])->name('sales.invoice');
+});
+
+Route::group(['middleware' => ['permission:Service Management|Sales Management']], function () {
+    Route::get('payments/{id}/{payment_for}', [PaymentController::class, 'payments'])->name('payments');
+    Route::post('add/payment', [PaymentController::class, 'addPayment'])->name('add.payment');
+    Route::post('update/payment/{id}', [PaymentController::class, 'updatePayment'])->name('update.payment');
+    Route::delete('delete/payment/{id}', [PaymentController::class, 'deletePayment'])->name('delete.payment');
+});
+
+Route::resource('booking', BookingController::class);
     
 
 

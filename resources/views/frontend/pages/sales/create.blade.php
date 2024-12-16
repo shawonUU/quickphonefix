@@ -115,6 +115,34 @@
                                                         <input id="total" type="number"  class="form-control" readonly>
 													</div>
 												</div>
+
+												<div class="col-lg-4 col-md-6 col-sm-12">
+													<div class="input-block mb-3">
+														<label>Paid Amount</label>
+                                                        <input onchange="calculateDue()" type="number"  class="form-control" placeholder="Paid Amount" id="paid_amount" name="paid_amount" value="{{ old('paid_amount') }}" >
+													</div>
+												</div>
+
+												<div class="col-lg-4 col-md-6 col-sm-12">
+													<div class="input-block mb-3">
+														<label>Due Amount</label>
+                                                        <input type="number"  class="form-control" placeholder="Due Amount" id="due_amount" name="due_amount" value="{{ old('due_amount') }}" readonly>
+													</div>
+												</div>
+
+
+												<div class="col-lg-4 col-md-6 col-sm-12">
+													<div class="input-block mb-3">
+														<label>Payment Method <span class="text-danger">*</span></label>
+                                                        <Select class="form-select" name="payment_method_id">
+                                                            <option value="">--Select--</option>
+                                                            @foreach (paymentMethods() as $key => $name)
+															<option value="{{$key}}" {{ old('payment_method_id') == $key ? 'selected' : '' }}>{{$name}}</option>
+                                                            @endforeach
+                                                        </Select>
+													</div>
+												</div>
+
 											</div>
 										</div>
 																	
@@ -150,7 +178,15 @@
         qty = 0;
     }
     document.getElementById("total").value = price * qty;
+	calculateDue();
   }
+
+  function calculateDue(){
+	var bill = (document.getElementById("total").value.trim() * 1)??0;
+	var paid_amount = (document.getElementById("paid_amount").value.trim() * 1)??0;
+	document.getElementById("due_amount").value = Math.max(0, bill-paid_amount);
+  }
+
 </script>
 
 @endsection

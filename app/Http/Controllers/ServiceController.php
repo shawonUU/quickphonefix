@@ -7,6 +7,7 @@ use App\Models\Service;
 use App\Models\Customer;
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Payment;
 use Input;
 use Validator;
 
@@ -63,6 +64,9 @@ class ServiceController extends Controller
             'product_name' => 'required',
             'product_number' => 'nullable',
             'bill' => 'required|numeric',
+            'paid_amount' => 'nullable|numeric',
+            'due_amount' => 'nullable|numeric',
+            'payment_method_id' => 'nullable|numeric',
             'warranty_duration' => 'required|numeric',
             'repaired_by' => 'required|numeric',
         ];
@@ -110,11 +114,25 @@ class ServiceController extends Controller
         $service->product_name = $request->product_name;
         $service->product_number = $request->product_number;
         $service->bill = $request->bill;
+        $service->paid_amount = $request->paid_amount;
+        $service->due_amount = max(0,$request->bill-$request->paid_amount);
         $service->details = $request->details;
         $service->warranty_duration = $request->warranty_duration;
         $service->repaired_by = $request->repaired_by;
         $service->status = '0';
         $service->save();
+
+        if($request->paid_amount > 0){
+            $payment = new Payment;
+            $payment->payment_for = '1';
+            $payment->customer_id = $customer->id;
+            $payment->bill_id = $service->id;
+            $payment->payment_method_id = $request->payment_method_id;
+            $payment->amount = $request->paid_amount;
+            $payment->save();
+        }
+        
+
 
         return redirect()->back()->with(['success' => getNotify(1)]);
 
@@ -206,6 +224,7 @@ class ServiceController extends Controller
         $service->product_name = $request->product_name;
         $service->product_number = $request->product_number;
         $service->bill = $request->bill;
+        $service->due_amount = max(0,$request->bill-$service->paid_amount);
         $service->details = $request->details;
         $service->warranty_duration = $request->warranty_duration;
         $service->repaired_by = $request->repaired_by;

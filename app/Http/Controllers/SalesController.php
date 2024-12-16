@@ -7,6 +7,7 @@ use App\Models\Sale;
 use App\Models\Customer;
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Payment;
 use Input;
 use Validator;
 
@@ -62,6 +63,9 @@ class SalesController extends Controller
             'product_name' => 'required',
             'price' => 'required|numeric',
             'qty' => 'required|numeric',
+            'paid_amount' => 'nullable|numeric',
+            'due_amount' => 'nullable|numeric',
+            'payment_method_id' => 'nullable|numeric',
         ];
         $validation = Validator::make($attributes, $rules);
         if ($validation->fails()) {
@@ -108,7 +112,19 @@ class SalesController extends Controller
         $service->price = $request->price;
         $service->qty = $request->qty;
         $service->bill = $request->price * $request->qty;
+        $service->paid_amount = $request->paid_amount;
+        $service->due_amount = max(0,$service->bill - $request->paid_amount);
         $service->save();
+
+        if($request->paid_amount > 0){
+            $payment = new Payment;
+            $payment->payment_for = '2';
+            $payment->customer_id = $customer->id;
+            $payment->bill_id = $service->id;
+            $payment->payment_method_id = $request->payment_method_id;
+            $payment->amount = $request->paid_amount;
+            $payment->save();
+        }
 
         return redirect()->back()->with(['success' => getNotify(1)]);
 
@@ -199,6 +215,7 @@ class SalesController extends Controller
         $service->price = $request->price;
         $service->qty = $request->qty;
         $service->bill = $request->price * $request->qty;
+        $service->due_amount = max(0,$service->bill-$service->paid_amount);
         $service->save();
 
         return redirect()->back()->with(['success' => getNotify(2)]);

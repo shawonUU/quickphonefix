@@ -108,14 +108,7 @@
 													</div>
 												</div>
 
-                                                <div class="col-lg-4 col-md-6 col-sm-12">
-													<div class="input-block mb-3">
-														<label>Price <span class="text-danger">*</span></label>
-                                                        <input type="number"  class="form-control" placeholder="Price" name="bill" value="{{ old('bill') }}" required>
-													</div>
-												</div>
-
-                                                <div class="col-lg-4 col-md-6 col-sm-12">
+												<div class="col-lg-4 col-md-6 col-sm-12">
 													<div class="input-block mb-3">
 														<label>Warranty Duration (In days) <span class="text-danger">*</span></label>
                                                         <input type="number"  class="form-control" placeholder="Warranty Duration" name="warranty_duration" value="{{ old('warranty_duration') }}">
@@ -129,6 +122,40 @@
                                                             <option value="">--Select--</option>
                                                             @foreach ($users as $user)
 															<option value="{{$user->id}}" {{ old('repaired_by') == $user->id ? 'selected' : '' }}>{{$user->name}}</option>
+                                                            @endforeach
+                                                        </Select>
+													</div>
+												</div>
+
+                                                <div class="col-lg-4 col-md-6 col-sm-12">
+													<div class="input-block mb-3">
+														<label>Price <span class="text-danger">*</span></label>
+                                                        <input onchange="calculateDue()" type="number"  class="form-control" placeholder="Price" id="bill" name="bill" value="{{ old('bill') }}" required>
+													</div>
+												</div>
+
+												<div class="col-lg-4 col-md-6 col-sm-12">
+													<div class="input-block mb-3">
+														<label>Paid Amount</label>
+                                                        <input onchange="calculateDue()" type="number"  class="form-control" placeholder="Paid Amount" id="paid_amount" name="paid_amount" value="{{ old('paid_amount') }}" >
+													</div>
+												</div>
+
+												<div class="col-lg-4 col-md-6 col-sm-12">
+													<div class="input-block mb-3">
+														<label>Due Amount</label>
+                                                        <input type="number"  class="form-control" placeholder="Due Amount" id="due_amount" name="due_amount" value="{{ old('due_amount') }}" readonly>
+													</div>
+												</div>
+
+
+												<div class="col-lg-4 col-md-6 col-sm-12">
+													<div class="input-block mb-3">
+														<label>Payment Method <span class="text-danger">*</span></label>
+                                                        <Select class="form-select" name="payment_method_id">
+                                                            <option value="">--Select--</option>
+                                                            @foreach (paymentMethods() as $key => $name)
+															<option value="{{$key}}" {{ old('payment_method_id') == $key ? 'selected' : '' }}>{{$name}}</option>
                                                             @endforeach
                                                         </Select>
 													</div>
@@ -157,6 +184,13 @@
 		tags: true,
 	});
   });
+
+  function calculateDue(){
+	var bill = (document.getElementById("bill").value.trim() * 1)??0;
+	var paid_amount = (document.getElementById("paid_amount").value.trim() * 1)??0;
+	
+	document.getElementById("due_amount").value = Math.max(0, bill-paid_amount);
+  }
 </script>
 
 @endsection
