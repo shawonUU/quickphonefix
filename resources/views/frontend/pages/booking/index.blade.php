@@ -96,6 +96,7 @@
                         <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Full Name: activate to sort column ascending">Full Name</th>
                         <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Phone Number: activate to sort column ascending">Phone Number</th>
                         <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Message: activate to sort column ascending">Message</th>
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Message: activate to sort column ascending">Device name</th>
                         <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="EMI/Serial Number: activate to sort column ascending">EMI/Serial Number</th>
                         <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Address: activate to sort column ascending">Address</th>
                         <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Actions: activate to sort column ascending">Actions</th>
@@ -107,7 +108,8 @@
                           <td class="sorting_1">{{ $index + 1 }}</td> <!-- Dynamically generating row number -->
                           <td>{{ $entry['full_name'] }}</td>
                           <td>{{ $entry['phone_number'] }}</td>
-                          <td>{{ $entry['message'] }}</td>
+                          <td>{{ \Illuminate\Support\Str::limit($entry['message'], 20, '...') }}</td>
+                          <td>{{ $entry['details'] }}</td>
                           <td>{{ $entry['emi_number_or_serial_number'] }}</td>
                           <td>{{ $entry['address'] }}</td>
                           <td class="d-flex align-items-center">
@@ -156,7 +158,12 @@
 
                     <div class="mb-3">
                         <label for="modalMessage" class="form-label">Message</label>
-                        <input class="form-control" type="text" id="modalMessage" disabled value="{{ $entry['message'] }}">
+                        <textarea class="form-control" id="modalMessage" rows="4" disabled>{{ $entry['message'] }}</textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="modalMessage" class="form-label">Device Name</label>
+                        <input class="form-control" type="text" id="modalMessage" disabled value="{{ $entry['details'] }}">
                     </div>
 
                     <div class="mb-3">

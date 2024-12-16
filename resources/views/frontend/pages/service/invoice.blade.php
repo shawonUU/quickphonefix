@@ -977,7 +977,7 @@
                 <p></p>
                 <p class="mb-0 xsm-text fk-print-text text-center text-capitalize" style="font-size: 14px;">7157 Ogontaz Ave,
                 Philadelphia PA 19138</p>
-                <p class="mb-0 xsm-text fk-print-text text-center text-capitalize" style="font-size: 14px;">Hotline: +234 901 791 9699</p>
+                <p class="mb-0 xsm-text fk-print-text text-center text-capitalize" style="font-size: 14px;">Hotline: +445 309 7609</p>
                 <div class="col-12 mt-1 mb-1" style="border-bottom: 1px dashed"></div>
                 <!-- <span class="d-block fk-print-text fk-print-text--bold text-uppercase text-center md-text">Kitchen Order Token  (KOT)</span> -->
                 <div class="col-12 mt-1 mb-1" style="border-bottom: 1px dashed"></div>
@@ -1058,7 +1058,7 @@
                 <!-- <p class="mb-0 xsm-text fk-print-text text-capitalize text-center">bill prepared by: Ariya Stark</p> -->
                 <!-- <span>---------------------------------------------------------------------------------------------------</span> -->
                 <div class="col-12 mt-2 mb-1" style="border-bottom: 1px dashed"></div>
-                <span scope="col" class="fk-print-text fk-print-text--bold xsm-text text-capitalize" style="font-size: 14px;" id="datePlaceholder">Date: {{date("Y-m-d g:i A")}}</span>
+                <span scope="col" class="fk-print-text fk-print-text--bold xsm-text text-capitalize" style="font-size: 14px;" id="datePlaceholder">Date: {{date("m-d-Y g:i A")}}</span>
                 <br>
                 <span scope="col" class="fk-print-text fk-print-text--bold xsm-text text-capitalize text-center" style="font-size: 14px;">Generate By: {{auth()->user()->name}}</span>
                 <table class="table mt-1 mb-1 text-center table-borderless">
@@ -1068,6 +1068,7 @@
                 </table>
                 <div class="col-12 mt-0" style="border-bottom: 1px dashed"></div>
                 <p class="mb-0 sm-text fk-print-text--bold text-center text-capitalize" style="font-size: 12px;">Thank You. Please come again</p>
+                <p class="mb-0 sm-text fk-print-text--bold text-center text-capitalize" style="font-size: 12px;">Note: Warranty For 7 Days. Warranty Does Not Cover Broken Or Water Damage. No Refund, Exchange Only.</p>
                 <div class="col-12 mt-0" style="border-bottom: 1px dashed"></div>
                 <div class="col-12 mt-0" style="border-bottom: 1px dashed"></div>
                 <div class="no-cut">&nbsp;</div>
@@ -1091,7 +1092,7 @@
                 <p></p>
                 <p class="mb-0 xsm-text fk-print-text text-center text-capitalize" style="font-size: 14px;">7157 Ogontaz Ave,
                 Philadelphia PA 19138</p>
-                <p class="mb-0 xsm-text fk-print-text text-center text-capitalize" style="font-size: 14px;">Hotline: +234 901 791 9699</p>
+                <p class="mb-0 xsm-text fk-print-text text-center text-capitalize" style="font-size: 14px;">Hotline: +445 309 7609</p>
                 <div class="col-12 mt-1 mb-1" style="border-bottom: 1px dashed"></div>
                 <!-- <span class="d-block fk-print-text fk-print-text--bold text-uppercase text-center md-text">Kitchen Order Token  (KOT)</span> -->
                 <div class="col-12 mt-1 mb-1" style="border-bottom: 1px dashed"></div>
@@ -1172,7 +1173,7 @@
                 <!-- <p class="mb-0 xsm-text fk-print-text text-capitalize text-center">bill prepared by: Ariya Stark</p> -->
                 <!-- <span>---------------------------------------------------------------------------------------------------</span> -->
                 <div class="col-12 mt-2 mb-1" style="border-bottom: 1px dashed"></div>
-                <span scope="col" class="fk-print-text fk-print-text--bold xsm-text text-capitalize" style="font-size: 14px;" id="datePlaceholder">Date: {{date("Y-m-d g:i A")}}</span>
+                <span scope="col" class="fk-print-text fk-print-text--bold xsm-text text-capitalize" style="font-size: 14px;" id="datePlaceholder">Date: {{date("m-d-Y g:i A")}}</span>
                 <br>
                 <span scope="col" class="fk-print-text fk-print-text--bold xsm-text text-capitalize text-center" style="font-size: 14px;">Generate By: {{auth()->user()->name}}</span>
                 <table class="table mt-1 mb-1 text-center table-borderless">
@@ -1182,6 +1183,7 @@
                 </table>
                 <div class="col-12 mt-0" style="border-bottom: 1px dashed"></div>
                 <p class="mb-0 sm-text fk-print-text--bold text-center text-capitalize" style="font-size: 12px;">Thank You. Please come again</p>
+                <p class="mb-0 sm-text fk-print-text--bold text-center text-capitalize" style="font-size: 12px;">Note: Warranty For 7 Days. Warranty Does Not Cover Broken Or Water Damage. No Refund, Exchange Only.</p>
                 <div class="col-12 mt-0" style="border-bottom: 1px dashed"></div>
                 <div class="col-12 mt-0" style="border-bottom: 1px dashed"></div>
                 <div class="no-cut">&nbsp;</div>
