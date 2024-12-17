@@ -28,9 +28,19 @@ class ServiceController extends Controller
             $services = $services->whereBetween('services.created_at', [$from, $to]);
         }
 
+        if ($request->service_type != "") {
+            if($request->service_type=="paid"){
+                $services = $services->where('services.due_amount', '=', '0');
+            }
+            if($request->service_type=="due"){
+                $services = $services->where('services.due_amount', '>', '0');
+            }
+        }
+
         if ($request->serach_by != "" && $request->key != "") {
            $services = $services->where('services.'.$request->serach_by, 'like', '%' . $request->key . '%');
         }
+
 
         $services = $services->where('services.status','0');
         $services = $services->select('services.*','users.name as repaired_by')->orderBy('id','desc')->get();
@@ -265,6 +275,15 @@ class ServiceController extends Controller
             $from = date('Y-m-d 00:00:00', strtotime($request->from));
             $to = date('Y-m-d 23:59:59', strtotime($request->to));
             $services = $services->whereBetween('services.created_at', [$from, $to]);
+        }
+
+        if ($request->service_type != "") {
+            if($request->service_type=="paid"){
+                $services = $services->where('services.due_amount', '=', '0');
+            }
+            if($request->service_type=="due"){
+                $services = $services->where('services.due_amount', '>', '0');
+            }
         }
 
         if ($request->serach_by != "" && $request->key != "") {

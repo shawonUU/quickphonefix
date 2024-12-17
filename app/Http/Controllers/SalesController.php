@@ -24,6 +24,15 @@ class SalesController extends Controller
             $services = $services->whereBetween('sales.created_at', [$from, $to]);
         }
 
+        if ($request->sales_type != "") {
+            if($request->sales_type=="paid"){
+                $services = $services->where('sales.due_amount', '=', '0');
+            }
+            if($request->sales_type=="due"){
+                $services = $services->where('sales.due_amount', '>', '0');
+            }
+        }
+
         if ($request->serach_by != "" && $request->key != "") {
            $services = $services->where('sales.'.$request->serach_by, 'like', '%' . $request->key . '%');
         }

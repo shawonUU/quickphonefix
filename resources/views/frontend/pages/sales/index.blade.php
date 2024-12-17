@@ -66,7 +66,15 @@
           <label for="">To</label><br>
           <input type="date" name="to" class="form-control" value="{{isset($request) ? $request->to : ''}}">
         </div>
-        <div class="col-12 col-md-3">
+        <div class="col-12 col-md-2">
+          <label for="">Sales Type</label><br>
+          <select name="sales_type" id="" class="form-select">
+            <option value="">--Select--</option>
+            <option value="paid" {{ (isset($request) && $request->sales_type == 'paid') ? 'selected' : ''}} >Paid</option>
+            <option value="due" {{ (isset($request) && $request->sales_type == 'due') ? 'selected' : ''}}>Due</option>
+          </select>
+        </div>
+        <div class="col-12 col-md-2">
           <label for="">Search By</label><br>
           <select name="serach_by" id="" class="form-select">
             <option value="">--Select--</option>
@@ -76,7 +84,7 @@
             <option value="product_name" {{ (isset($request) && $request->serach_by == 'product_name') ? 'selected' : ''}}>Product Name</option>
           </select>
         </div>
-        <div class="col-12 col-md-3">
+        <div class="col-12 col-md-2">
           <label for="">Search Key</label><br>
           <input type="text" name="key" class="form-control" value="{{isset($request) ? $request->key : ''}}">
         </div>

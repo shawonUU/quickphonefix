@@ -151,7 +151,7 @@
 
 												<div class="col-lg-4 col-md-6 col-sm-12">
 													<div class="input-block mb-3">
-														<label>Payment Method <span class="text-danger">*</span></label>
+														<label>Payment Method </label>
                                                         <Select class="form-select" name="payment_method_id">
                                                             <option value="">--Select--</option>
                                                             @foreach (paymentMethods() as $key => $name)

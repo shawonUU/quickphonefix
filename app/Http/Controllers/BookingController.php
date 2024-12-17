@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Booking;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Product;
 use Illuminate\Support\Facades\Http;
 class BookingController extends Controller
 {
@@ -27,7 +29,8 @@ class BookingController extends Controller
         }
 
         $users = lib_serviceMan();
-        return view('frontend.pages.booking.index',compact('bookingData'));
+        $products = Product::where('status','1')->where('type','1')->get();
+        return view('frontend.pages.booking.index',compact('bookingData','products','users'));
     }
 
     /**

@@ -1,5 +1,20 @@
 @extends('frontend.layouts.app') 
 @section('content')
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
+<style>
+.select2-container--default .select2-selection--single {
+    outline: none;
+}
+
+.select2-container .select2-search--inline .select2-search__field {
+    outline: none !important;
+    border: none;
+    box-shadow: none;
+    width: 100% !important;
+}
+
+</style>
 
 <div class="content container-fluid">
   <!-- Page Header -->
@@ -120,7 +135,7 @@
                               <div class="dropdown-menu dropdown-menu-end">
                                 <ul>
                                   <li>
-                                    <a class="dropdown-item " href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#signup-modal">
+                                    <a class="dropdown-item " href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#signup-modal{{ $entry['_ID'] }}">
                                       <i class="far fa-eye me-2"></i>View Details
                                     </a>
                                   </li>
@@ -131,55 +146,127 @@
 
 
 
-  <div id="signup-modal" class="modal fade" tabindex="-1" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="text-center mt-2 mb-4">
-                    <div class="auth-logo">
-                        <a href="{{ route('index') }}" class="logo logo-dark">
-                            <span class="logo-lg">
-                                <img src="assets/img/logo.png" alt="Logo" height="42">
-                            </span>
-                        </a>
-                    </div>
-                </div>
+                            <div id="signup-modal{{ $entry['_ID'] }}" class="modal fade" style="display: none;" aria-hidden="true">
+                              <div class="modal-dialog modal-lg">
+                                  <div class="modal-content">
+                                      <div class="modal-body">
+                                          <div class="text-center mt-2 mb-4">
+                                              <div class="auth-logo">
+                                                  <a href="{{ route('index') }}" class="logo logo-dark">
+                                                      <span class="logo-lg">
+                                                          <img src="{{asset('assets/img/logo.png')}}" alt="Logo" height="42">
+                                                      </span>
+                                                  </a>
+                                              </div>
+                                          </div>
 
-                <form class="px-3">
-                    <div class="mb-3">
-                        <label for="modalFullName" class="form-label">Name</label>
-                        <input class="form-control" type="text" id="modalFullName" disabled value="{{ $entry['full_name'] }}">
-                    </div>
+                                          <div class="text-left mt-2 mb-4">
+                                              <h4>Add to Service</h4>
+                                          </div>
 
-                    <div class="mb-3">
-                        <label for="modalPhoneNumber" class="form-label">Phone Number</label>
-                        <input class="form-control" type="text" id="modalPhoneNumber" disabled value="{{ $entry['phone_number'] }}">
-                    </div>
+                                          <form class="px-3" action="{{route('service.store')}}" method="post">
+                                              @csrf
 
-                    <div class="mb-3">
-                        <label for="modalMessage" class="form-label">Message</label>
-                        <textarea class="form-control" id="modalMessage" rows="4" disabled>{{ $entry['message'] }}</textarea>
-                    </div>
+                                              <div class="row">
+                                                <div class="mb-3 col-12 col-md-4">
+                                                    <label for="modalFullName" class="form-label">Name<span class="text-danger">*</span></label>
+                                                    <input class="form-control" type="text" id="modalFullName" name="name" placeholder="Enter Name" value="{{ $entry['full_name'] }}" required>
+                                                </div>
 
-                    <div class="mb-3">
-                        <label for="modalMessage" class="form-label">Device Name</label>
-                        <input class="form-control" type="text" id="modalMessage" disabled value="{{ $entry['details'] }}">
-                    </div>
+                                                <div class="mb-3 col-12 col-md-4">
+                                                    <label for="modalPhoneNumber" class="form-label">Phone <span class="text-danger">*</span></label>
+                                                    <input class="form-control" type="text" id="modalPhoneNumber" placeholder="Phone Number" name="phone" value="{{ $entry['phone_number'] }}" required>
+                                                </div>
 
-                    <div class="mb-3">
-                        <label for="modalEmiNumber" class="form-label">EMI/Serial Number</label>
-                        <input class="form-control" type="text" id="modalEmiNumber" disabled value="{{ $entry['emi_number_or_serial_number'] }}">
-                    </div>
+                                                <div class="mb-3 col-12 col-md-4">
+                                                  <label>Email </label>
+                                                  <input type="email" name="email" class="form-control" placeholder="Enter Email Address" value="">
+                                                </div>
 
-                    <div class="mb-3">
-                        <label for="modalAddress" class="form-label">Address</label>
-                        <input class="form-control" type="text" id="modalAddress" disabled value="{{ $entry['address'] }}">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-  </div>
+                                                <div class="mb-3 col-12 col-md-4">
+                                                    <label for="modalAddress" class="form-label">Address</label>
+                                                    <textarea type="text"  class="form-control" placeholder="Address" id="modalAddress" name="address">{{ $entry['address'] }}</textarea>
+
+                                                </div>
+
+                                                <div class="mb-3 col-12 col-md-4">
+                                                  <label>Product Name <span class="text-danger">*</span></label><br>
+                                                  <select name="product_name" id="" class="form-control js-example-basic-single" tabindex="0" required>
+                                                    <option value="">--select--</option>
+                                                    @php
+                                                    $entry['details'] = "xyz";
+                                                    @endphp
+                                                    @foreach ($products as $product)
+                                                      <option value="{{$product->id}}" {{ $entry['details'] ==  $product->name ? 'selected' : ''}}>{{$product->name}}</option>
+                                                    @endforeach
+                                                    
+
+                                                    @if ($entry['details'] != "" && $entry['details'] != null && !in_array($entry['details'], $products->pluck('name')->toArray()))
+                                                        <option value="{{ $entry['details'] }}" class="add-new-option" selected>{{ $entry['details'] }}</option>
+                                                    @endif
+                                                  </select>
+                                                </div>
+
+                                                <div class="mb-3 col-12 col-md-4">
+                                                    <label for="modalEmiNumber" class="form-label">EMI/Serial Number</label>
+                                                    <input type="text"  class="form-control" placeholder="Product EMEI or Serial number" name="product_number" value="{{ $entry['emi_number_or_serial_number'] }}" >
+                                                </div>
+
+                                                <div class="mb-3 col-12 col-md-4">
+                                                    <label for="modalMessage" class="form-label">Service Details</label>
+                                                    <textarea class="form-control" id="modalMessage" name="details" >{{ $entry['message'] }}</textarea>
+                                                </div>
+
+                                                <div class="mb-3 col-12 col-md-4">
+                                                  <label>Warranty Duration (In days) <span class="text-danger">*</span></label>
+                                                  <input type="number"  class="form-control" placeholder="Warranty Duration" name="warranty_duration" value="{{ old('warranty_duration') }}">
+                                                </div>
+
+                                                <div class="mb-3 col-12 col-md-4">
+                                                  <label>Repaired By <span class="text-danger">*</span></label>
+                                                  <Select class="form-select" name="repaired_by" required>
+                                                      <option value="">--Select--</option>
+                                                      @foreach ($users as $key => $user)
+                                                        <option value="{{$key}}" {{ old('repaired_by') == $key ? 'selected' : '' }}>{{$user}}</option>
+                                                      @endforeach
+                                                  </Select>
+                                                </div>
+
+                                                <div class="mb-3 col-12 col-md-4">
+                                                  <label>Price <span class="text-danger">*</span></label>
+                                                  <input onchange="calculateDue()" type="number"  class="form-control" placeholder="Price" id="bill" name="bill" value="{{ old('bill') }}" required>
+                                                </div>
+
+                                                <div class="mb-3 col-12 col-md-4">
+                                                  <label>Paid Amount</label>
+                                                  <input onchange="calculateDue()" type="number"  class="form-control" placeholder="Paid Amount" id="paid_amount" name="paid_amount" value="{{ old('paid_amount') }}" >
+                                                </div>
+
+                                                <div class="mb-3 col-12 col-md-4">
+                                                  <label>Due Amount</label>
+                                                  <input type="number"  class="form-control" placeholder="Due Amount" id="due_amount" name="due_amount" value="{{ old('due_amount') }}" readonly>
+                                                </div>
+
+                                                <div class="mb-3 col-12 col-md-4">
+                                                  <label>Payment Method </label>
+                                                  <Select class="form-select" name="payment_method_id">
+                                                      <option value="">--Select--</option>
+                                                      @foreach (paymentMethods() as $key => $name)
+                                                      <option value="{{$key}}" {{ old('payment_method_id') == $key ? 'selected' : '' }}>{{$name}}</option>
+                                                      @endforeach
+                                                  </Select>
+                                                </div>
+
+                                                <div class="mb-3 col-12 justify-content-left">
+                                                  <button class="btn btn-primary" type="submit">Submit</button>
+                                                </div>
+                                              </div>
+                                             
+                                          </form>
+                                      </div>
+                                  </div>
+                              </div>
+                            </div>
 
 
                           </td>
@@ -221,5 +308,31 @@
     </div>
   </div>
 </div>
+
+<!-- jQuery (make sure it's loaded before Select2 JS) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('.js-example-basic-single').select2({
+		  tags: true,
+	  });
+    $('.js-example-basic-single').each(function() { 
+        $(this).select2({ 
+          dropdownParent: $(this).parent(),
+          tags: true,
+        });
+    })
+  });
+
+  function calculateDue(){
+    var bill = (document.getElementById("bill").value.trim() * 1)??0;
+    var paid_amount = (document.getElementById("paid_amount").value.trim() * 1)??0;
+    
+    document.getElementById("due_amount").value = Math.max(0, bill-paid_amount);
+  }
+</script>
 
 @endsection

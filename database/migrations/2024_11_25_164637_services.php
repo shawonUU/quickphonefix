@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('address')->nullable();
             $table->string('product_name');
             $table->string('product_number')->nullable();;
-            $table->string('details')->nullable();
+            $table->text('details')->nullable();
             $table->double('bill');
             $table->integer('warranty_duration');
             $table->bigInteger('repaired_by');
