@@ -24,13 +24,16 @@
       </div>
       <div class="custom-col-xl-2 col-sm-6 col-12">
         <div class="card">
-          <div class="card-body">
+          <div class="card-body p-2">
+            <div class="d-flex justify-content-end" style="">
+              <a href="{{route('service.complated', ['from' => date('Y-m-d'), 'to' => date('Y-m-d')])}}" class="bg-1 text-center rounded" style="width:20px; height:20px;"><i class="fe fe-filter"></i></a>
+            </div>
             <div class="dash-widget-header">
               <span class="dash-widget-icon bg-1">
                 <i class="fas fa-dollar-sign"></i>
               </span>
               <div class="dash-count">
-                <div class="dash-title">Today's Service</div>
+                <div class="dash-title">Today's Service </div>
                 <div class="dash-counts">
                   <p>{{$todaysRevenue}}</p>
                 </div>
@@ -42,7 +45,10 @@
       </div>
       <div class="custom-col-xl-2 col-sm-6 col-12">
         <div class="card">
-          <div class="card-body">
+          <div class="card-body p-2">
+            <div class="d-flex justify-content-end" style="">
+              <a href="{{route('service.complated', ['from' => now()->startOfWeek()->format('Y-m-d'), 'to' => now()->endOfWeek()->format('Y-m-d')])}}" class="bg-1 text-center rounded" style="width:20px; height:20px;"><i class="fe fe-filter"></i></a>
+            </div>
             <div class="dash-widget-header">
               <span class="dash-widget-icon bg-1">
                 <i class="fas fa-dollar-sign"></i>
@@ -60,7 +66,10 @@
       </div>
       <div class="custom-col-xl-2 col-sm-6 col-12">
         <div class="card">
-          <div class="card-body">
+          <div class="card-body p-2">
+            <div class="d-flex justify-content-end" style="">
+              <a href="{{route('service.complated', ['from' => now()->startOfMonth()->format('Y-m-d'), 'to' => now()->endOfMonth()->format('Y-m-d')])}}" class="bg-1 text-center rounded" style="width:20px; height:20px;"><i class="fe fe-filter"></i></a>
+            </div>
             <div class="dash-widget-header">
               <span class="dash-widget-icon bg-1">
                 <i class="fas fa-dollar-sign"></i>
@@ -78,7 +87,10 @@
       </div>
       <div class="custom-col-xl-2 col-sm-6 col-12">
         <div class="card">
-          <div class="card-body">
+          <div class="card-body p-2">
+            <div class="d-flex justify-content-end" style="">
+              <a href="{{route('service.complated', ['from' => now()->startOfYear()->format('Y-m-d'), 'to' => now()->endOfYear()->format('Y-m-d')])}}" class="bg-1 text-center rounded" style="width:20px; height:20px;"><i class="fe fe-filter"></i></a>
+            </div>
             <div class="dash-widget-header">
               <span class="dash-widget-icon bg-1">
                 <i class="fas fa-dollar-sign"></i>
@@ -96,7 +108,10 @@
       </div>
       <div class="custom-col-xl-2 col-sm-6 col-12">
         <div class="card">
-          <div class="card-body">
+          <div class="card-body p-2">
+            <div class="d-flex justify-content-end" style="">
+              <a href="{{route('service.complated', ['service_type' => 'due'])}}" class="bg-1 text-center rounded" style="width:20px; height:20px;"><i class="fe fe-filter"></i></a>
+            </div>
             <div class="dash-widget-header">
               <span class="dash-widget-icon bg-1 bg-danger">
                 <i class="fas fa-dollar-sign"></i>
@@ -119,7 +134,10 @@
 
       <div class="custom-col-xl-2 col-sm-6 col-12">
         <div class="card">
-          <div class="card-body">
+          <div class="card-body p-2">
+            <div class="d-flex justify-content-end" style="">
+              <a href="{{route('sales.index', ['from' => date('Y-m-d'), 'to' => date('Y-m-d')])}}" class="bg-1 text-center rounded" style="width:20px; height:20px;"><i class="fe fe-filter"></i></a>
+            </div>
             <div class="dash-widget-header">
               <span class="dash-widget-icon bg-1">
                 <i class="fas fa-dollar-sign"></i>
@@ -137,7 +155,10 @@
       </div>
       <div class="custom-col-xl-2 col-sm-6 col-12">
         <div class="card">
-          <div class="card-body">
+          <div class="card-body p-2">
+            <div class="d-flex justify-content-end" style="">
+              <a href="{{route('sales.index', ['from' => now()->startOfWeek()->format('Y-m-d'), 'to' => now()->endOfWeek()->format('Y-m-d')])}}" class="bg-1 text-center rounded" style="width:20px; height:20px;"><i class="fe fe-filter"></i></a>
+            </div>
             <div class="dash-widget-header">
               <span class="dash-widget-icon bg-1">
                 <i class="fas fa-dollar-sign"></i>
@@ -155,7 +176,10 @@
       </div>
       <div class="custom-col-xl-2 col-sm-6 col-12">
         <div class="card">
-          <div class="card-body">
+          <div class="card-body p-2">
+            <div class="d-flex justify-content-end" style="">
+              <a href="{{route('sales.index', ['from' => now()->startOfMonth()->format('Y-m-d'), 'to' => now()->endOfMonth()->format('Y-m-d')])}}" class="bg-1 text-center rounded" style="width:20px; height:20px;"><i class="fe fe-filter"></i></a>
+            </div>
             <div class="dash-widget-header">
               <span class="dash-widget-icon bg-1">
                 <i class="fas fa-dollar-sign"></i>
@@ -173,7 +197,10 @@
       </div>
       <div class="custom-col-xl-2 col-sm-6 col-12">
         <div class="card">
-          <div class="card-body">
+          <div class="card-body p-2">
+            <div class="d-flex justify-content-end" style="">
+              <a href="{{route('sales.index', ['from' => now()->startOfYear()->format('Y-m-d'), 'to' => now()->endOfYear()->format('Y-m-d')])}}" class="bg-1 text-center rounded" style="width:20px; height:20px;"><i class="fe fe-filter"></i></a>
+            </div>
             <div class="dash-widget-header">
               <span class="dash-widget-icon bg-1">
                 <i class="fas fa-dollar-sign"></i>
@@ -191,7 +218,10 @@
       </div>
       <div class="custom-col-xl-2 col-sm-6 col-12">
         <div class="card">
-          <div class="card-body">
+          <div class="card-body p-2">
+            <div class="d-flex justify-content-end" style="">
+              <a href="{{route('sales.index', ['sales_type' => 'due'])}}" class="bg-1 text-center rounded" style="width:20px; height:20px;"><i class="fe fe-filter"></i></a>
+            </div>
             <div class="dash-widget-header">
               <span class="dash-widget-icon bg-1 bg-danger">
                 <i class="fas fa-dollar-sign"></i>

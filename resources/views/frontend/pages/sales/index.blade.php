@@ -90,7 +90,9 @@
         </div>
         <div class="col-12 col-md-2">
           <label for=""></label>
-          <button type="submit" class="btn btn-primary" style="margin-top:25px;">Search</button>
+          <button type="submit" name="search_for" value="filter" class="btn btn-primary" style="margin-top:25px;">Search</button>
+          <label for=""></label>
+          <button type="submit" name="search_for" value="pdf" class="btn btn-primary" style="margin-top:25px;"><i class="fe fe-download"></i></button>
         </div>
       </div>
     </form>

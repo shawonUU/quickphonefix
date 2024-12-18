@@ -10,6 +10,7 @@ use App\Models\Product;
 use App\Models\Payment;
 use Input;
 use Validator;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class SalesController extends Controller
 {
@@ -17,33 +18,46 @@ class SalesController extends Controller
     {
 
         $services = Sale::query();
+
+        $defaultFilter = true;
         
         if ($request->from != "" && $request->to != "") {
             $from = date('Y-m-d 00:00:00', strtotime($request->from));
             $to = date('Y-m-d 23:59:59', strtotime($request->to));
             $services = $services->whereBetween('sales.created_at', [$from, $to]);
+            $defaultFilter = false;
         }
 
         if ($request->sales_type != "") {
             if($request->sales_type=="paid"){
                 $services = $services->where('sales.due_amount', '=', '0');
+                $defaultFilter = false;
             }
             if($request->sales_type=="due"){
                 $services = $services->where('sales.due_amount', '>', '0');
+                $defaultFilter = false;
             }
         }
 
         if ($request->serach_by != "" && $request->key != "") {
            $services = $services->where('sales.'.$request->serach_by, 'like', '%' . $request->key . '%');
+           $defaultFilter = false;
         }
 
-        if($request->from == "" && $request->to == "" && $request->serach_by == "" && $request->key == ""){
+        if($defaultFilter){
             $startOfDay = date('Y-m-d 00:00:00');
             $endOfDay = date('Y-m-d 23:59:59');
             $services = $services->whereBetween('sales.created_at', [$startOfDay, $endOfDay]);
         }
 
         $services = $services->orderBy('id','desc')->get();
+
+        if($request->search_for == 'pdf'){
+            // return view('pdf.sales',compact('services','request'));
+            $pdf = Pdf::loadView('pdf.sales', compact('services', 'request'))
+                ->setPaper('A4', 'portrait');
+            return $pdf->download('Sales.pdf');
+        }
 
         return view('frontend.pages.sales.index',compact('services','request'));
     }

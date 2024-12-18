@@ -8,6 +8,7 @@ use App\Models\Customer;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Payment;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Input;
 use Validator;
 
@@ -18,6 +19,8 @@ class ServiceController extends Controller
      */
     public function index(Request $request)
     {
+
+        // return $request->all();
 
 
         $services = Service::join('users','users.id','=','services.repaired_by');
@@ -46,7 +49,12 @@ class ServiceController extends Controller
         $services = $services->select('services.*','users.name as repaired_by')->orderBy('id','desc')->get();
 
         $users = lib_serviceMan();
+        if($request->search_for == 'pdf'){
+            $pdf = Pdf::loadView('pdf.services', compact('services','users','request'));
+            return $pdf->download('Services.pdf');
+        }
         return view('frontend.pages.service.index',compact('services','users','request'));
+        
     }
 
     /**
@@ -271,26 +279,32 @@ class ServiceController extends Controller
     public function complatedService(Request $request){
         $services = Service::join('users','users.id','=','services.repaired_by');
 
+        $defaultFilter = true;
+
         if ($request->from != "" && $request->to != "") {
             $from = date('Y-m-d 00:00:00', strtotime($request->from));
             $to = date('Y-m-d 23:59:59', strtotime($request->to));
             $services = $services->whereBetween('services.created_at', [$from, $to]);
+            $defaultFilter = false;
         }
 
         if ($request->service_type != "") {
             if($request->service_type=="paid"){
                 $services = $services->where('services.due_amount', '=', '0');
+                $defaultFilter = false;
             }
             if($request->service_type=="due"){
                 $services = $services->where('services.due_amount', '>', '0');
+                $defaultFilter = false;
             }
         }
 
         if ($request->serach_by != "" && $request->key != "") {
             $services = $services->where('services.'.$request->serach_by, 'like', '%' . $request->key . '%');
+            $defaultFilter = false;
         }
 
-        if($request->from == "" && $request->to == "" && $request->serach_by == "" && $request->key == ""){
+        if($defaultFilter){
             $startOfMonth = date('Y-m-01 00:00:00');
             $endOfMonth = date('Y-m-t 23:59:59');
             $services = $services->whereBetween('services.created_at', [$startOfMonth, $endOfMonth]);
@@ -300,6 +314,12 @@ class ServiceController extends Controller
         $services = $services->select('services.*','users.name as repaired_by')->orderBy('id','desc')->get();
 
         $users = lib_serviceMan();
+
+        if($request->search_for == 'pdf'){
+            $pdf = Pdf::loadView('pdf.services', compact('services','users','request'));
+            return $pdf->download('Services.pdf');
+        }
+
         return view('frontend.pages.service.complated',compact('services','users','request'));
     }
 
