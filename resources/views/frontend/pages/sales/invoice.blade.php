@@ -1031,12 +1031,16 @@
                       <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">Price</th>
                       <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">Qty</th>
                       <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">Total Price</th>
+                      <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">Paid</th>
+                      <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">Due</th>
                     </tr>
                     <tr>
                       <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">{{$service->product_name}}</td>
                       <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">${{$service->price}}</td>
                       <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">{{$service->qty}}</td>
                       <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">${{$service->bill}}</td>
+                      <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">${{$service->paid_amount}}</td>
+                      <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">${{$service->due_amount}}</td>
                     </tr>
                   </tbody>
                 </table>

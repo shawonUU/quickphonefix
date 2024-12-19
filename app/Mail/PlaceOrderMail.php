@@ -20,16 +20,18 @@ use App\Models\Admin\ProductTag;
 class PlaceOrderMail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $orderNumber;
+    public $service;
+    public $serviceMans;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($orderNumber)
+    public function __construct($service, $serviceMans)
     {
-        $this->orderNumber = $orderNumber;
+        $this->service = $service;
+        $this->serviceMans = $serviceMans;
     }
 
     /**
@@ -39,20 +41,12 @@ class PlaceOrderMail extends Mailable
      */
     public function build()
     {
-        $id = $this->orderNumber;
+        $service = $this->service;
+        $serviceMans = $this->serviceMans;
 
-        $order = Order::leftJoin('users', 'users.id', '=', 'orders.customer_id')
-        ->select('orders.*','users.name', 'users.email')
-        ->where('orders.order_number', $id)->first();
-
-        $billing = Address::where('id',  $order->billing_address)->first();
-        $shipping = Address::where('id',  $order->shipping_address)->first();
-        $items = OrderItem::where('order_items.order_number', $id)->get();
-        $lib_districts = lib_districts();
-        $lib_areas = lib_areas();
-
-        return $this->view('layouts.placeOrderMail', compact('order','items', 'billing', 'shipping','lib_districts','lib_areas'))
-                    ->subject('Order Placed');
+    
+        return $this->view('layouts.placeOrderMail', compact('service','serviceMans'))
+                    ->subject('New services added');
     }
 }
 

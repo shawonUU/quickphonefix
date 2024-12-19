@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Service;
-use App\Models\Customer;
-use App\Models\User;
-use App\Models\Product;
-use App\Models\Payment;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Input;
 use Validator;
+use App\Models\User;
+use App\Models\Payment;
+use App\Models\Product;
+use App\Models\Service;
+use App\Models\Customer;
+use App\Mail\PlaceOrderMail;
+use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Mail;
 
 class ServiceController extends Controller
 {
@@ -149,6 +151,16 @@ class ServiceController extends Controller
             $payment->amount = $request->paid_amount;
             $payment->save();
         }
+
+
+
+        $service = Service::join('customers','customers.id','=','services.customer_id')
+                    ->where('services.id',$service->id)
+                    ->select('services.*')
+                    ->first();
+        $serviceMans = lib_serviceMan();
+
+        Mail::to($request->email)->send(new PlaceOrderMail($service, $serviceMans));
         
 
 

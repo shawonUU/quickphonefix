@@ -1044,12 +1044,16 @@
                       <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">EMEI Number</th>
                       <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">Service Warranty</th>
                       <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">Price</th>
+                      <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">Paid</th>
+                      <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">Due</th>
                     </tr>
                     <tr>
                       <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">{{$service->product_name}}</td>
                       <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">{{$service->product_number}}</td>
                       <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">{{$service->warranty_duration}} Days</td>
                       <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">${{$service->bill}}</td>
+                      <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">${{$service->paid_amount}}</td>
+                      <td  class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">${{$service->due_amount}}</td>
                     </tr>
                   </tbody>
                 </table>
