@@ -11,6 +11,8 @@ use App\Models\Payment;
 use Input;
 use Validator;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Mail\CreateSalesMail;
+use Illuminate\Support\Facades\Mail;
 
 class SalesController extends Controller
 {
@@ -149,6 +151,11 @@ class SalesController extends Controller
             $payment->save();
         }
 
+        $service = Sale::where('id', $service->id)->first();
+        Mail::to($request->email)->send(new CreateSalesMail($service));
+
+        // return view('frontend.pages.sales.invoice',compact('service'));
+
         return redirect()->back()->with(['success' => getNotify(1)]);
 
     }
@@ -258,7 +265,7 @@ class SalesController extends Controller
     }
 
     public function makeInvoice(Request $request, $serviceId){
-        $service = Sale::first();
+        $service = Sale::where('id', $serviceId)->first();
         if(!$service)abort(404);
 
         return view('frontend.pages.sales.invoice',compact('service'));

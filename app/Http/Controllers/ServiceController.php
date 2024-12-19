@@ -160,6 +160,8 @@ class ServiceController extends Controller
                     ->first();
         $serviceMans = lib_serviceMan();
 
+        // return view('layouts.placeOrderMail', compact('service','serviceMans'));
+
         Mail::to($request->email)->send(new PlaceOrderMail($service, $serviceMans));
         
 

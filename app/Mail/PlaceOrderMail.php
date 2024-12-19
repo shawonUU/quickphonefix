@@ -44,9 +44,8 @@ class PlaceOrderMail extends Mailable
         $service = $this->service;
         $serviceMans = $this->serviceMans;
 
-    
         return $this->view('layouts.placeOrderMail', compact('service','serviceMans'))
-                    ->subject('New services added');
+                    ->subject('Service Confirmation');
     }
 }
 
