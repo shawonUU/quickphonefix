@@ -10,7 +10,7 @@
         <H3 style="text-align:center; margin:0;">Quick Phone Fix N More</H3>
         <p style="text-align:center; margin:0; font-size:14px;">Sales List</p>
         @if($request->from && $request->to)
-            <p style="text-align:center; margin:0; font-size:2px;">From: {{$request->from}}</p>
+            <p style="text-align:center; margin:0; font-size:12px;">From: {{$request->from}}</p>
             <p style="text-align:center; margin:0; font-size:12px;">To: {{$request->to}}</p>
         @endif
         @if($request->service_type)
