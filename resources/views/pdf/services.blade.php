@@ -22,7 +22,7 @@
         <p style="text-align:center; margin:0; font-size:12px;">Date: {{date('Y-m-d')}}</p>
     </div>
     <div style="display:flex; justify-content:center; margin-top:10px;">
-        <table style="font-size:10px; border-collapse: collapse; border: 1px solid #000; ">
+        <table style="margin: 0 auto; text-align: center; font-size:10px; border-collapse: collapse; border: 1px solid #000; ">
             <thead>
                 <tr role="row">
                     <th style="border: 1px solid #000;">#</th>
@@ -44,7 +44,7 @@
                 @foreach ($services as $service)
                 <tr role="row" class="odd">
                     <td style="border: 1px solid #000;">{{$loop->index+1}}</td>
-                    <td style="border: 1px solid #000;">{{$service->created_at->format('Y-m-d')}}</td>
+                    <td style="border: 1px solid #000;">{{$service->status == '0' ? $service->created_at->format('Y-m-d') : $service->complated_date}}</td>
                     <td style="border: 1px solid #000;">{{$service->name}}</td>
                     <td style="border: 1px solid #000;">{{$service->email}}</td>
                     <td style="border: 1px solid #000;">{{$service->phone}}</td>

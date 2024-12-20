@@ -14,7 +14,7 @@
         }
       }
     </style>
-    <link rel="stylesheet" href="https://konacafedhaka.com/pos/style.css">
+    <link rel="stylesheet" href="{{asset('assets/css/invoice.css')}}">
     <!-- <link href="./2.97fd0627.chunk.css" rel="stylesheet"> -->
     <!-- <link href="./main.e1af72b3.chunk.css" rel="stylesheet"> -->
     <style id="react-to-print-3">
@@ -1024,7 +1024,7 @@
                 <table class="table mb-0 text table-borderless">
                   <tbody>
                     <tr style="border-bottom: 1px dashed ">
-                      <th scope="col" class="fk-print-text fk-print-text--bold xxsm-text text-capitalize" style="font-size: 14px;" colspan="4">Sales Info:</th>
+                      <th scope="col" class="fk-print-text fk-print-text--bold xxsm-text text-capitalize" style="font-size: 14px;" colspan="6">Sales Info:</th>
                     </tr>
                     <tr>
                       <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">Product</th>
@@ -1129,7 +1129,7 @@
                 <table class="table mb-0 text table-borderless">
                   <tbody>
                     <tr style="border-bottom: 1px dashed ">
-                      <th scope="col" class="fk-print-text fk-print-text--bold xxsm-text text-capitalize" style="font-size: 14px;" colspan="4">Sales Info:</th>
+                      <th scope="col" class="fk-print-text fk-print-text--bold xxsm-text text-capitalize" style="font-size: 14px;" colspan="6">Sales Info:</th>
                     </tr>
                     <tr>
                       <th class="fk-print-text xxsm-text text-capitalize" style="font-size: 14px;">Product</th>

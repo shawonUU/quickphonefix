@@ -47,9 +47,9 @@ class SalesController extends Controller
         }
 
         if($defaultFilter){
-            $startOfDay = date('Y-m-d 00:00:00');
-            $endOfDay = date('Y-m-d 23:59:59');
-            $services = $services->whereBetween('sales.created_at', [$startOfDay, $endOfDay]);
+            $startOfMonth = date('Y-m-01 00:00:00');
+            $endOfMonth = date('Y-m-t 23:59:59');
+            $services = $services->whereBetween('sales.created_at', [$startOfMonth, $endOfMonth]);
         }
 
         $services = $services->orderBy('id','desc')->get();

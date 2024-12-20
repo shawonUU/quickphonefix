@@ -155,7 +155,7 @@
                   <tr role="row" class="odd">
                     <td class="sorting_1">{{$loop->index+1}}</td>
                     <td>
-                      <h2 class="table-avatar"> <span>{{$service->created_at->format('Y-m-d')}}</span></h2>
+                      <h2 class="table-avatar"> <span>{{$service->complated_date}}</span></h2>
                     </td>
                     <td>
                       <h2 class="table-avatar">

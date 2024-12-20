@@ -22,7 +22,7 @@
         <p style="text-align:center; margin:0; font-size:12px;">Date: {{date('Y-m-d')}}</p>
     </div>
     <div style="display: flex; justify-content: center; margin-top: 10px; overflow-x: auto;">
-        <table style="font-size:10px; border-collapse: collapse; border: 1px solid #00; ">
+        <table style="margin: 0 auto; text-align: center; font-size:10px; border-collapse: collapse; border: 1px solid #00; ">
             <thead>
                 <tr role="row">
                     <th style="border: 1px solid #00;">#</th>
