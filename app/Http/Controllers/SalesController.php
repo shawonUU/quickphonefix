@@ -134,10 +134,10 @@ class SalesController extends Controller
         $service->email = $customer->email;
         $service->address = $customer->address;
         $service->product_name = $request->product_name;
-        $service->price = $request->price;
-        $service->qty = $request->qty;
-        $service->bill = $request->price * $request->qty;
-        $service->paid_amount = $request->paid_amount;
+        $service->price = $request->price??0;
+        $service->qty = $request->qty??0;
+        $service->bill = max(0,$request->price * $request->qty);
+        $service->paid_amount = $request->paid_amount??0;
         $service->due_amount = max(0,$service->bill - $request->paid_amount);
         $service->save();
 
@@ -152,7 +152,9 @@ class SalesController extends Controller
         }
 
         $service = Sale::where('id', $service->id)->first();
-        Mail::to($request->email)->send(new CreateSalesMail($service));
+        if($request->email){
+            Mail::to($request->email)->send(new CreateSalesMail($service));
+        }
 
         // return view('frontend.pages.sales.invoice',compact('service'));
 
@@ -242,9 +244,9 @@ class SalesController extends Controller
         $service->email = $customer->email;
         $service->address = $customer->address;
         $service->product_name = $request->product_name;
-        $service->price = $request->price;
-        $service->qty = $request->qty;
-        $service->bill = $request->price * $request->qty;
+        $service->price = $request->price??0;
+        $service->qty = $request->qty??0;
+        $service->bill = max(0,$request->price * $request->qty);
         $service->due_amount = max(0,$service->bill-$service->paid_amount);
         $service->save();
 

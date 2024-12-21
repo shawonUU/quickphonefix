@@ -14,9 +14,13 @@ return new class extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('customer_id');
+            $table->string('name');
+            $table->string('phone');
+            $table->string('email')->nullable();
+            $table->text('address')->nullable();
             $table->string('product_name');
             $table->string('product_number')->nullable();
-            $table->string('details')->nullable();
+            $table->text('details')->nullable();
             $table->enum('status', [0, 1])->default(1);
             $table->timestamps();
         });

@@ -29,13 +29,12 @@ class ProductContoller extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::where('products.is_book_or_product','2')
-        ->select('products.*')->orderBy('products.id', 'desc')->get();
-        $categories = lib_category();
-        $brands = lib_brand();
-        return view('admin.pages.product.index', compact('products','categories','brands'));
+        $type = $request->type == 'service' ? '1' : '2';
+
+        $products = Product::where('products.type',$type)->where('status','1')->get();
+        return view('frontend.pages.products', compact('products','type'));
     }
 
     /**
@@ -63,47 +62,25 @@ class ProductContoller extends Controller
         $attributes = $request->all();
         $rules = [
             'name' => 'required',
-            'category' => 'required',
-            'brand' => 'numeric|required',
-            'price' => 'numeric|nullable',
-            'offer_price' => 'nullable|numeric',
-            'status' => 'required',
         ];
         $validation = Validator::make($attributes, $rules);
         if ($validation->fails()) {
             return redirect()->back()->with(['error' => getNotify(4), 'error_code' => 'edit'])->withErrors($validation)->withInput();
         }
-        if($request->is_size_wise_price != 'on' && $request->price==""){
-            return redirect()->back()->with(['error' => 'Price field is required.', 'error_code' => 'edit'])->withInput();
-        }
 
-        $imageName = "";
-        if ($request->hasFile('images')) {
-            $image = $request->file('images');
-            $destinationPath = public_path('frontend/product_images/');
-            $imageName = now()->format('YmdHis') . '_' . Str::random(10) . '.' . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $imageName);
+        if(!is_numeric($request->name)){
+            $product = new Product;
+            $product->name = $request->name;
+            $product->type = $request->type;
+            $product->save();
+        }else{
+            $product = Product::where('id', $request->name)->first();
+            if(!$product){
+                return redirect()->back()->with(['error' => 'Invalid product name.']);
+            }
+            return redirect()->back()->with(['error' => 'This product already exist.']);
         }
-        // Create a new product instance
-        $product = new Product([
-            'name' => $request->input('name'),
-            'search_string' => $request->input('name').' '.getBanglish($request->input('name')),
-            'category_id' => implode(',', $request->category),
-            // 'sub_category_id' => $request->sub_category,
-            'description' => $request->input('description'),
-            'image' => $imageName,
-            'price' => $request->price,
-            'offer_price' => $request->offer_price??0,
-            'offer_from' => $request->offer_from,
-            'offer_to' => $request->offer_to,
-            'brand_id' => $request->brand,
-            'is_book_or_product' => '2',
-            'is_size' => ($request->is_size == 'on' ? '1' : '0'),
-            'is_size_wise_price' => ($request->is_size_wise_price == 'on' ? '1' : '0'),
-            'status' => $request->input('status'),
-            'created_by' => auth()->user()->id,
-        ]);
-        $product->save();
+        
         return redirect()->back()->with(['success' => getNotify(1)]);
     }
 
@@ -146,10 +123,6 @@ class ProductContoller extends Controller
         $attributes = $request->all();
         $rules = [
             'name' => 'required',
-            'category' => 'required',
-            'brand' => 'numeric|required',
-            'price' => 'numeric',
-            'offer_price' => 'nullable|numeric',
             'status' => 'required',
         ];
         $validation = Validator::make($attributes, $rules);
@@ -157,46 +130,22 @@ class ProductContoller extends Controller
             return redirect()->back()->with(['error' => getNotify(4), 'error_code' => 'edit'])->withErrors($validation)->withInput();
         }
 
-        if($request->is_size_wise_price != 'on' && $request->price==""){
-            return redirect()->back()->with(['error' => 'Price field is required.', 'error_code' => 'edit'])->withInput();
-        }
-
         $product = Product::where('id', $id)->first();
         if(!$product){
             return redirect()->back()->with(['error' => getNotify(10)])->withInput();
         }
 
-        $imageName = "";
-        if ($image = $request->file('images')) {
-            if ($product->image != NULL) {
-                $imagePath = public_path('frontend/product_images/' . $product->image);
-                if (File::exists($imagePath)) {
-                    unlink($imagePath);
-                }
+        if(!is_numeric($request->name)){
+            $product->name = $request->name;
+            $product->type = $request->type;
+            $product->update();
+        }else{
+            $product = Product::where('id', $request->name)->first();
+            if(!$product){
+                return redirect()->back()->with(['error' => 'Invalid product name.']);
             }
-            $destinationPath = public_path('frontend/product_images/');
-            $imageName = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $imageName);
-        } else {
-            $imageName = $product->image;
+            return redirect()->back()->with(['error' => 'This product already exist.']);
         }
-
-        $product->name = $request->input('name');
-        $product->category_id = implode(',', $request->category);
-        // $product->sub_category_id = $request->sub_category;
-        $product->description = $request->input('description');
-        $product->image = $imageName;
-        $product->price = $request->price??0;
-        $product->offer_price = $request->offer_price??0;
-        $product->offer_from = $request->offer_from;
-        $product->offer_to = $request->offer_to;
-        $product->brand_id = $request->brand;
-        $product->is_book_or_product = '2';
-        $product->is_size = ($request->is_size == 'on' ? '1' : '0');
-        $product->is_size_wise_price = ($request->is_size_wise_price == 'on' ? '1' : '0');
-        $product->status = $request->input('status');
-        $product->updated_by = auth()->user()->id;
-        $product->update();
 
         return redirect()->back()->with(['success' => getNotify(2)]);
 
@@ -208,32 +157,10 @@ class ProductContoller extends Controller
     public function destroy(string $id)
     {
         $product = Product::where('id', $id)->first();
-        if ($product->image != NULL) {
-            unlink(public_path('frontend/product_images/' . $product->image));
-        }
-        $productTags = ProductTag::where('pro_id', $id)->get();
-        if ($productTags) {
-            foreach ($productTags as $item) {
-                $item->delete();
-            }
-        }
-        $options = ProductOption::where('product_id', $id)->get();
-        if ($options) {
-            foreach ($options as $option) {
-                ProductOptionTopping::where('product_option_id', $option->id)->delete();
-                $option->delete();
-            }
-        }
+        if(!$product) abort(404);
 
         $product->delete();
-
-        session()->flash('sweet_alert', [
-            'type' => 'success',
-            'title' => 'Success!',
-            'text' => 'Product delete success',
-        ]);
-        // Redirect or return a response as needed
-        return redirect()->route('products.index')->with('warning', 'Product delete successfully');
+        return redirect()->back()->with('success', 'Product delete successfully');
     }
 
     public function size($id)

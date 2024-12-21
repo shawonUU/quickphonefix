@@ -28,9 +28,11 @@ class BookingController extends Controller
             $bookingData = []; // Handle error or fallback
         }
 
+        $bookings = Booking::pluck('id')->toArray();
+
         $users = lib_serviceMan();
         $products = Product::where('status','1')->where('type','1')->get();
-        return view('frontend.pages.booking.index',compact('bookingData','products','users'));
+        return view('frontend.pages.booking.index',compact('bookingData','products','users','bookings'));
     }
 
     /**

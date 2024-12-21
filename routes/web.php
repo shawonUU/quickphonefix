@@ -94,7 +94,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', [FrontendController::class, 'index'])->name('index');
     
     Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
-
     Route::group(['middleware' => ['permission:settings']], function () {
         Route::prefix('settings')->middleware(['auth'])->group(function () {
             Route::get('home-page', [HomePageController::class, 'index'])->name('settings.home_page');
@@ -126,7 +125,6 @@ Route::middleware(['auth'])->group(function () {
             Route::resource('categories', CategoryController::class);
             Route::resource('sub-categories', SubCategoryController::class); 
             Route::resource('brand', BrandController::class);
-            Route::resource('products', ProductContoller::class);
             Route::resource('sizes', SizeController::class);
             Route::resource('nutritions', NutritionController::class);
             Route::resource('optiontitles', OptionTitleController::class);
@@ -232,6 +230,7 @@ Route::group(['middleware' => ['permission:Service Management|Sales Management']
     Route::post('add/payment', [PaymentController::class, 'addPayment'])->name('add.payment');
     Route::post('update/payment/{id}', [PaymentController::class, 'updatePayment'])->name('update.payment');
     Route::delete('delete/payment/{id}', [PaymentController::class, 'deletePayment'])->name('delete.payment');
+    Route::resource('products', ProductContoller::class);
 });
 
 Route::resource('booking', BookingController::class);

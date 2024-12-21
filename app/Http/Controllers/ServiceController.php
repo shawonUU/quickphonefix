@@ -9,6 +9,7 @@ use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Service;
 use App\Models\Customer;
+use App\Models\Booking;
 use App\Mail\PlaceOrderMail;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -94,7 +95,7 @@ class ServiceController extends Controller
         if ($validation->fails()) {
             return redirect()->back()->with(['error' => getNotify(4)])->withErrors($validation)->withInput();
         }
-
+        // return $request->all();
         if(!is_numeric($request->product_name)){
             $product = new Product;
             $product->name = $request->product_name;
@@ -133,14 +134,28 @@ class ServiceController extends Controller
         $service->address = $customer->address;
         $service->product_name = $request->product_name;
         $service->product_number = $request->product_number;
-        $service->bill = $request->bill;
-        $service->paid_amount = $request->paid_amount;
+        $service->bill = $request->bill??0;
+        $service->paid_amount = $request->paid_amount??0;
         $service->due_amount = max(0,$request->bill-$request->paid_amount);
         $service->details = $request->details;
         $service->warranty_duration = $request->warranty_duration;
         $service->repaired_by = $request->repaired_by;
         $service->status = '0';
         $service->save();
+
+        if($request->is_booking == 'true'){
+            $booking = new Booking;
+            $booking->id = $request->booking_id;
+            $booking->customer_id = $customer->id;
+            $booking->name = $customer->name;
+            $booking->phone = $customer->phone;
+            $booking->email = $customer->email;
+            $booking->address = $customer->address;
+            $booking->product_name = $request->product_name;
+            $booking->product_number = $request->product_number;
+            $booking->details = $request->details;
+            $booking->save();
+        }
 
         if($request->paid_amount > 0){
             $payment = new Payment;
@@ -162,7 +177,9 @@ class ServiceController extends Controller
 
         // return view('layouts.placeOrderMail', compact('service','serviceMans'));
 
-        Mail::to($request->email)->send(new PlaceOrderMail($service, $serviceMans));
+        if($request->email){
+            Mail::to($request->email)->send(new PlaceOrderMail($service, $serviceMans));
+        }
         
 
 
@@ -255,7 +272,7 @@ class ServiceController extends Controller
         $service->address = $customer->address;
         $service->product_name = $request->product_name;
         $service->product_number = $request->product_number;
-        $service->bill = $request->bill;
+        $service->bill = $request->bill??0;
         $service->due_amount = max(0,$request->bill-$service->paid_amount);
         $service->details = $request->details;
         $service->warranty_duration = $request->warranty_duration;

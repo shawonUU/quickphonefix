@@ -114,6 +114,7 @@
                         <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Message: activate to sort column ascending">Device name</th>
                         <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="EMI/Serial Number: activate to sort column ascending">EMI/Serial Number</th>
                         <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Address: activate to sort column ascending">Address</th>
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Address: activate to sort column ascending">Status</th>
                         <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Actions: activate to sort column ascending">Actions</th>
                       </tr>
                     </thead>
@@ -127,6 +128,11 @@
                           <td>{{ $entry['details'] }}</td>
                           <td>{{ $entry['emi_number_or_serial_number'] }}</td>
                           <td>{{ $entry['address'] }}</td>
+                          @if(in_array($entry['_ID'] , $bookings))
+                          <td><span class="badge bg-success">Completed</span></td>
+                          @else
+                          <td><span class="badge bg-primary">Pending</span></td>
+                          @endif
                           <td class="d-flex align-items-center">
                             <div class="dropdown dropdown-action">
                               <a href="#" class="btn-action-icon" data-bs-toggle="dropdown" aria-expanded="false">
@@ -164,105 +170,149 @@
                                               <h4>Add to Service</h4>
                                           </div>
 
-                                          <form class="px-3" action="{{route('service.store')}}" method="post">
-                                              @csrf
+                                          @if(in_array($entry['_ID'] , $bookings))
 
-                                              <div class="row">
-                                                <div class="mb-3 col-12 col-md-4">
-                                                    <label for="modalFullName" class="form-label">Name<span class="text-danger">*</span></label>
-                                                    <input class="form-control" type="text" id="modalFullName" name="name" placeholder="Enter Name" value="{{ $entry['full_name'] }}" required>
+                                            <form class="px-3" action="javascript:void(0)" method="post">
+                                                <div class="row">
+                                                  <div class="mb-3 col-12 col-md-4">
+                                                      <label for="modalFullName" class="form-label">Name</label>
+                                                      <input class="form-control" type="text" id="modalFullName" name="name" placeholder="Enter Name" value="{{ $entry['full_name'] }}" required readonly>
+                                                  </div>
+
+                                                  <div class="mb-3 col-12 col-md-4">
+                                                      <label for="modalPhoneNumber" class="form-label">Phone</label>
+                                                      <input class="form-control" type="text" id="modalPhoneNumber" placeholder="Phone Number" name="phone" value="{{ $entry['phone_number'] }}" required readonly>
+                                                  </div>
+
+                                                  
+
+                                                  <div class="mb-3 col-12 col-md-4">
+                                                      <label for="modalAddress" class="form-label">Address</label>
+                                                      <textarea type="text"  class="form-control" placeholder="Address" id="modalAddress" name="address" readonly>{{ $entry['address'] }}</textarea>
+
+                                                  </div>
+
+                                                  <div class="mb-3 col-12 col-md-4">
+                                                    <label>Product Name </label><br>
+                                                    <input class="form-control" type="text" id="product_name" placeholder="Phone Number" name="product_name" value="{{ $entry['details'] }}" required readonly>
+                                                  </div>
+
+                                                  <div class="mb-3 col-12 col-md-4">
+                                                      <label for="modalEmiNumber" class="form-label">EMI/Serial Number</label>
+                                                      <input type="text"  class="form-control" placeholder="Product EMEI or Serial number" name="product_number" value="{{ $entry['emi_number_or_serial_number'] }}" readonly>
+                                                  </div>
+
+                                                  <div class="mb-3 col-12 col-md-4">
+                                                      <label for="modalMessage" class="form-label">Service Details</label>
+                                                      <textarea class="form-control" id="modalMessage" name="details" readonly>{{ $entry['message'] }}</textarea>
+                                                  </div>
                                                 </div>
+                                            </form>
 
-                                                <div class="mb-3 col-12 col-md-4">
-                                                    <label for="modalPhoneNumber" class="form-label">Phone <span class="text-danger">*</span></label>
-                                                    <input class="form-control" type="text" id="modalPhoneNumber" placeholder="Phone Number" name="phone" value="{{ $entry['phone_number'] }}" required>
-                                                </div>
+                                          @else
+                                            <form class="px-3" action="{{route('service.store')}}" method="post">
+                                                @csrf
 
-                                                <div class="mb-3 col-12 col-md-4">
-                                                  <label>Email </label>
-                                                  <input type="email" name="email" class="form-control" placeholder="Enter Email Address" value="">
-                                                </div>
+                                                <input type="text" name="is_booking" value="true" hidden>
+                                                <input type="text" name="booking_id" value="{{ $entry['_ID'] }}" hidden>
 
-                                                <div class="mb-3 col-12 col-md-4">
-                                                    <label for="modalAddress" class="form-label">Address</label>
-                                                    <textarea type="text"  class="form-control" placeholder="Address" id="modalAddress" name="address">{{ $entry['address'] }}</textarea>
+                                                <div class="row">
+                                                  <div class="mb-3 col-12 col-md-4">
+                                                      <label for="modalFullName" class="form-label">Name<span class="text-danger">*</span></label>
+                                                      <input class="form-control" type="text" id="modalFullName" name="name" placeholder="Enter Name" value="{{ $entry['full_name'] }}" required>
+                                                  </div>
 
-                                                </div>
+                                                  <div class="mb-3 col-12 col-md-4">
+                                                      <label for="modalPhoneNumber" class="form-label">Phone <span class="text-danger">*</span></label>
+                                                      <input class="form-control" type="text" id="modalPhoneNumber" placeholder="Phone Number" name="phone" value="{{ $entry['phone_number'] }}" required>
+                                                  </div>
 
-                                                <div class="mb-3 col-12 col-md-4">
-                                                  <label>Product Name <span class="text-danger">*</span></label><br>
-                                                  <select name="product_name" id="" class="form-control js-example-basic-single" tabindex="0" required>
-                                                    <option value="">--select--</option>
-                                                    @php
-                                                    $entry['details'] = "xyz";
-                                                    @endphp
-                                                    @foreach ($products as $product)
-                                                      <option value="{{$product->id}}" {{ $entry['details'] ==  $product->name ? 'selected' : ''}}>{{$product->name}}</option>
-                                                    @endforeach
-                                                    
+                                                  <div class="mb-3 col-12 col-md-4">
+                                                    <label>Email </label>
+                                                    <input type="email" name="email" class="form-control" placeholder="Enter Email Address" value="">
+                                                  </div>
 
-                                                    @if ($entry['details'] != "" && $entry['details'] != null && !in_array($entry['details'], $products->pluck('name')->toArray()))
-                                                        <option value="{{ $entry['details'] }}" class="add-new-option" selected>{{ $entry['details'] }}</option>
-                                                    @endif
-                                                  </select>
-                                                </div>
+                                                  <div class="mb-3 col-12 col-md-4">
+                                                      <label for="modalAddress" class="form-label">Address</label>
+                                                      <textarea type="text"  class="form-control" placeholder="Address" id="modalAddress" name="address">{{ $entry['address'] }}</textarea>
 
-                                                <div class="mb-3 col-12 col-md-4">
-                                                    <label for="modalEmiNumber" class="form-label">EMI/Serial Number</label>
-                                                    <input type="text"  class="form-control" placeholder="Product EMEI or Serial number" name="product_number" value="{{ $entry['emi_number_or_serial_number'] }}" >
-                                                </div>
+                                                  </div>
 
-                                                <div class="mb-3 col-12 col-md-4">
-                                                    <label for="modalMessage" class="form-label">Service Details</label>
-                                                    <textarea class="form-control" id="modalMessage" name="details" >{{ $entry['message'] }}</textarea>
-                                                </div>
-
-                                                <div class="mb-3 col-12 col-md-4">
-                                                  <label>Warranty Duration (In days) <span class="text-danger">*</span></label>
-                                                  <input type="number"  class="form-control" placeholder="Warranty Duration" name="warranty_duration" value="{{ old('warranty_duration') }}">
-                                                </div>
-
-                                                <div class="mb-3 col-12 col-md-4">
-                                                  <label>Repaired By <span class="text-danger">*</span></label>
-                                                  <Select class="form-select" name="repaired_by" required>
-                                                      <option value="">--Select--</option>
-                                                      @foreach ($users as $key => $user)
-                                                        <option value="{{$key}}" {{ old('repaired_by') == $key ? 'selected' : '' }}>{{$user}}</option>
+                                                  <div class="mb-3 col-12 col-md-4">
+                                                    <label>Product Name <span class="text-danger">*</span></label><br>
+                                                    <select name="product_name" id="" class="form-control js-example-basic-single" tabindex="0" required>
+                                                      <option value="">--select--</option>
+                                                      @php
+                                                      $entry['details'] = "xyz";
+                                                      @endphp
+                                                      @foreach ($products as $product)
+                                                        <option value="{{$product->id}}" {{ $entry['details'] ==  $product->name ? 'selected' : ''}}>{{$product->name}}</option>
                                                       @endforeach
-                                                  </Select>
-                                                </div>
+                                                      
 
-                                                <div class="mb-3 col-12 col-md-4">
-                                                  <label>Price <span class="text-danger">*</span></label>
-                                                  <input onchange="calculateDue()" type="number"  class="form-control" placeholder="Price" id="bill" name="bill" value="{{ old('bill') }}" required>
-                                                </div>
+                                                      @if ($entry['details'] != "" && $entry['details'] != null && !in_array($entry['details'], $products->pluck('name')->toArray()))
+                                                          <option value="{{ $entry['details'] }}" class="add-new-option" selected>{{ $entry['details'] }}</option>
+                                                      @endif
+                                                    </select>
+                                                  </div>
 
-                                                <div class="mb-3 col-12 col-md-4">
-                                                  <label>Paid Amount</label>
-                                                  <input onchange="calculateDue()" type="number"  class="form-control" placeholder="Paid Amount" id="paid_amount" name="paid_amount" value="{{ old('paid_amount') }}" >
-                                                </div>
+                                                  <div class="mb-3 col-12 col-md-4">
+                                                      <label for="modalEmiNumber" class="form-label">EMI/Serial Number</label>
+                                                      <input type="text"  class="form-control" placeholder="Product EMEI or Serial number" name="product_number" value="{{ $entry['emi_number_or_serial_number'] }}" >
+                                                  </div>
 
-                                                <div class="mb-3 col-12 col-md-4">
-                                                  <label>Due Amount</label>
-                                                  <input type="number"  class="form-control" placeholder="Due Amount" id="due_amount" name="due_amount" value="{{ old('due_amount') }}" readonly>
-                                                </div>
+                                                  <div class="mb-3 col-12 col-md-4">
+                                                      <label for="modalMessage" class="form-label">Service Details</label>
+                                                      <textarea class="form-control" id="modalMessage" name="details" >{{ $entry['message'] }}</textarea>
+                                                  </div>
 
-                                                <div class="mb-3 col-12 col-md-4">
-                                                  <label>Payment Method </label>
-                                                  <Select class="form-select" name="payment_method_id">
-                                                      <option value="">--Select--</option>
-                                                      @foreach (paymentMethods() as $key => $name)
-                                                      <option value="{{$key}}" {{ old('payment_method_id') == $key ? 'selected' : '' }}>{{$name}}</option>
-                                                      @endforeach
-                                                  </Select>
-                                                </div>
+                                                  <div class="mb-3 col-12 col-md-4">
+                                                    <label>Warranty Duration (In days) <span class="text-danger">*</span></label>
+                                                    <input type="number"  class="form-control" placeholder="Warranty Duration" name="warranty_duration" value="{{ old('warranty_duration') }}" required>
+                                                  </div>
 
-                                                <div class="mb-3 col-12 justify-content-left">
-                                                  <button class="btn btn-primary" type="submit">Submit</button>
+                                                  <div class="mb-3 col-12 col-md-4">
+                                                    <label>Repaired By <span class="text-danger">*</span></label>
+                                                    <Select class="form-select" name="repaired_by" required>
+                                                        <option value="">--Select--</option>
+                                                        @foreach ($users as $key => $user)
+                                                          <option value="{{$key}}" {{ old('repaired_by') == $key ? 'selected' : '' }}>{{$user}}</option>
+                                                        @endforeach
+                                                    </Select>
+                                                  </div>
+
+                                                  <div class="mb-3 col-12 col-md-4">
+                                                    <label>Price <span class="text-danger">*</span></label>
+                                                    <input onchange="calculateDue()" type="number"  class="form-control" placeholder="Price" id="bill" name="bill" value="{{ old('bill') }}" required>
+                                                  </div>
+
+                                                  <div class="mb-3 col-12 col-md-4">
+                                                    <label>Paid Amount</label>
+                                                    <input onchange="calculateDue()" type="number"  class="form-control" placeholder="Paid Amount" id="paid_amount" name="paid_amount" value="{{ old('paid_amount') }}" >
+                                                  </div>
+
+                                                  <div class="mb-3 col-12 col-md-4">
+                                                    <label>Due Amount</label>
+                                                    <input type="number"  class="form-control" placeholder="Due Amount" id="due_amount" name="due_amount" value="{{ old('due_amount') }}" readonly>
+                                                  </div>
+
+                                                  <div class="mb-3 col-12 col-md-4">
+                                                    <label>Payment Method </label>
+                                                    <Select class="form-select" name="payment_method_id">
+                                                        <option value="">--Select--</option>
+                                                        @foreach (paymentMethods() as $key => $name)
+                                                        <option value="{{$key}}" {{ old('payment_method_id') == $key ? 'selected' : '' }}>{{$name}}</option>
+                                                        @endforeach
+                                                    </Select>
+                                                  </div>
+
+                                                  <div class="mb-3 col-12 justify-content-left">
+                                                    <button class="btn btn-primary" type="submit">Submit</button>
+                                                  </div>
                                                 </div>
-                                              </div>
-                                             
-                                          </form>
+                                              
+                                            </form>
+                                          @endif
                                       </div>
                                   </div>
                               </div>
