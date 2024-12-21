@@ -41,7 +41,7 @@
 									<a href="{{ route('service.create') }}"><i class="fe fe-plus-circle"></i> <span> Add Service</span></a>
 									<a href="{{ route('service.index') }}"><i class="fe fe-refresh-cw"></i> <span>Pending Service</span></a>
 									<a href="{{ route('service.complated') }}"><i class="fe fe-check-square"></i> <span>Completed Service</span></a>
-									<a href="{{ route('products.index',['type' => 'service']) }}"><i class="fe fe-user"></i> <span> Product List</span></a>
+									<a href="{{ route('products.index',['type' => 'service']) }}"><i class="fe fe-package"></i> <span> Product List</span></a>
 								</li>
 							@endcan
 
@@ -50,7 +50,7 @@
 								<li>
 									<a href="{{ route('sales.create') }}"><i class="fe fe-plus-circle"></i> <span> Add Sales</span></a>
 									<a href="{{ route('sales.index') }}"><i class="fe fe-list"></i> <span>Sales List</span></a>
-									<a href="{{ route('products.index',['type' => 'sales']) }}"><i class="fe fe-user"></i> <span> Product List</span></a>
+									<a href="{{ route('products.index',['type' => 'sales']) }}"><i class="fe fe-package"></i> <span> Product List</span></a>
 								</li>
 							@endcan
 
